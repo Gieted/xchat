@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="xchat" type="JetRunConfigurationType">
-    <option name="MAIN_CLASS_NAME" value="pl.pawelkielb.xchat.dev.MainKt" />
+    <option name="MAIN_CLASS_NAME" value="pl.pawelkielb.xchat.MainKt" />
     <module name="xchat.dev" />
     <shortenClasspath name="NONE" />
     <method v="2">

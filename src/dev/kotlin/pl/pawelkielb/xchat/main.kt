@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.dev
+package pl.pawelkielb.xchat
 
 import kotlinx.coroutines.coroutineScope
 import java.io.File
@@ -21,14 +21,20 @@ suspend fun main(): Unit = coroutineScope {
                 // server.stop()
                 serverClass!!.declaredMethods.find { it.name == "stop" }!!.invoke(server)
             }
-            
-            val classLoader = URLClassLoader(arrayOf(File("build/classes/kotlin/main").toURI().toURL()))
+
+            val classLoader = URLClassLoader(
+                listOf("build/classes/kotlin/main", "build/classes/java/main")
+                    .map { File(it).toURI().toURL() }
+                    .toTypedArray()
+            )
+
             serverClass = classLoader.loadClass("pl.pawelkielb.xchat.Server")
-            
-            server = serverClass!!
-                .declaredConstructors
-                .find { it.parameterCount == 0 }!!
-                .newInstance()
+            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.ServerKt")
+
+            server = serverKt
+                .declaredMethods
+                .find { it.name == "Server" && it.parameterCount == 0 }!!
+                .invoke(null)
 
             // server.start()
             serverClass!!.declaredMethods.find { it.name == "start" }!!.invoke(server)
