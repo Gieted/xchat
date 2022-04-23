@@ -1,7 +1,6 @@
 package pl.pawelkielb.xchat
 
-import pl.pawelkielb.xchat.dagger.AppComponent
-import pl.pawelkielb.xchat.dagger.DaggerAppComponent
+import pl.pawelkielb.xchat.services.Server
 import java.lang.System.err
 import java.lang.System.getenv
 import kotlin.system.exitProcess
@@ -13,11 +12,6 @@ fun main() {
         exitProcess(1)
     }
     
-    val component: AppComponent = DaggerAppComponent.create()
-    val applicationScope = component.applicationScope()
-
-    with(applicationScope) {
-        val server = if (port != null) Server(port) else Server()
-        server.start()
-    }
+    val server = if (port != null) Server(port) else Server()
+    server.start()
 }

@@ -28,8 +28,8 @@ suspend fun main(): Unit = coroutineScope {
                     .toTypedArray()
             )
 
-            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.Server")
-            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.ServerKt")
+            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.services.Server")
+            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.services.ServerKt")
 
             server = serverKt
                 .declaredMethods

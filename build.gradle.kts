@@ -1,8 +1,9 @@
 import java.util.UUID
 
 plugins {
-    kotlin("jvm") version "1.6.20"
-    kotlin("kapt") version "1.6.20"
+    kotlin("jvm") version "1.6.21"
+    kotlin("kapt") version "1.6.21"
+    kotlin("plugin.serialization") version "1.6.21"
     application
 }
 
@@ -25,11 +26,14 @@ dependencies {
     
     implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     
     implementation("com.google.dagger:dagger:2.41")
     kapt("com.google.dagger:dagger-compiler:2.41")
     
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("org.litote.kmongo:kmongo-coroutine:4.5.1")
+    implementation("org.litote.kmongo:kmongo-id-serialization:4.5.1")
+    implementation("io.projectreactor:reactor-core:3.4.17")
     
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 }
