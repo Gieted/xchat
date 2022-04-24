@@ -3,7 +3,6 @@ package pl.pawelkielb.xchat.utils
 import org.litote.kmongo.Id
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.ChannelData
-import kotlin.NoSuchElementException
 
 suspend inline fun <reified T : Any> CoroutineDatabase.getDocument(collection: String, documentId: Id<*>): T =
     getCollection<T>(collection)

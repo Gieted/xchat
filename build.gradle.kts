@@ -36,6 +36,9 @@ dependencies {
     implementation("io.projectreactor:reactor-core:3.4.17")
     
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    
+    implementation("org.glassfish.jersey.containers:jersey-container-jetty-servlet:3.0.4")
+    implementation("org.glassfish.jersey.inject:jersey-hk2:3.0.4")
 }
 
 tasks.test {

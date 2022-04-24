@@ -1,12 +1,28 @@
 package pl.pawelkielb.xchat.data
 
-import pl.pawelkielb.xchat.resource
+import pl.pawelkielb.xchat.access_control.Permission
 
-val users = resource(identifier = UserData::id)
-val messages = resource(identifier = MessageData::id)
-val channels = resource(identifier = ChannelData::id, children = setOf(messages))
-
-val topLevelResources = mapOf(
-    "users" to users,
-    "channels" to channels
+val users = Resource(
+    type = UserData::class,
+    accessRule = { accessingUser, accessedUser ->
+        grantAccess(Permission.Create)
+    }
 )
+
+val messages = Resource(
+    type = MessageData::class,
+    accessRule = { _, _ ->
+        
+    }
+)
+
+val channels =  Resource(
+    type = ChannelData::class,
+    accessRule = { _, _ ->
+        
+    }
+)
+
+val resources = setOf(users, messages, channels)
+
+// /channels/xd/messages
