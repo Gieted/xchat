@@ -1,14 +1,15 @@
 package pl.pawelkielb.xchat.access_control
 
-import pl.pawelkielb.xchat.data.*
+import pl.pawelkielb.xchat.MessageData
+import pl.pawelkielb.xchat.UserData
 import pl.pawelkielb.xchat.model.Channel
 import pl.pawelkielb.xchat.model.User
 
-private val usersAccessRule: AccessRule<UserData> = { accessingUser, accessedUser ->
+val usersAccessRule: AccessRule<UserData> = { accessingUser, accessedUser ->
 
 }
 
-private val channelsAccessRule: AccessRule<Channel> = { accessingUser, channel ->
+val channelsAccessRule: AccessRule<Channel> = { accessingUser, channel ->
     if (accessingUser.isAuthenticated) {
         grantAccess(Permission.Create)
 
@@ -18,7 +19,7 @@ private val channelsAccessRule: AccessRule<Channel> = { accessingUser, channel -
     }
 }
 
-private val messagesAccessRule: AccessRule<MessageData> = { participant, message ->
+val messagesAccessRule: AccessRule<MessageData> = { participant, message ->
 
 }
 

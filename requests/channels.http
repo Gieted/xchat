@@ -1,0 +1,8 @@
+### List channels (Unauthorized)
+http://localhost:8080/v1/channels
+Accept: application/json
+
+### List channels (Admin)
+http://localhost:8080/v1/channels
+Accept: application/json
+Authorization: admin
