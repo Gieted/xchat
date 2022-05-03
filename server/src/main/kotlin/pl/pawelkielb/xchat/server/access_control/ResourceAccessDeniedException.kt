@@ -1,3 +1,3 @@
-package pl.pawelkielb.xchat.access_control
+package pl.pawelkielb.xchat.server.access_control
 
 class ResourceAccessDeniedException : Exception()

@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.dagger
+package pl.pawelkielb.xchat.server.dagger
 
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.services
+package pl.pawelkielb.xchat.server.services
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.ws.rs.GET

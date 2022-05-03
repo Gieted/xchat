@@ -1,11 +1,11 @@
-package pl.pawelkielb.xchat.services
+package pl.pawelkielb.xchat.server.services
 
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
-import pl.pawelkielb.xchat.dagger.AppComponent
-import pl.pawelkielb.xchat.dagger.DaggerAppComponent
+import pl.pawelkielb.xchat.server.dagger.AppComponent
+import pl.pawelkielb.xchat.server.dagger.DaggerAppComponent
 import org.eclipse.jetty.server.Server as Jetty
 
 class Server(
@@ -27,7 +27,7 @@ class Server(
 
             // add jersey
             run {
-                val resourceConfig = ResourceConfig().apply { 
+                val resourceConfig = ResourceConfig().apply {
                     register(v1Resource)
                     register(channelsResource)
                     register(channelResource)

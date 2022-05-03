@@ -5,6 +5,7 @@ import java.io.File
 import java.net.URLClassLoader
 import kotlin.concurrent.timer
 
+
 suspend fun main(): Unit = coroutineScope {
     var server: Any? = null
     var serverClass: Class<*>? = null
@@ -28,8 +29,8 @@ suspend fun main(): Unit = coroutineScope {
                     .toTypedArray()
             )
 
-            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.services.Server")
-            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.services.ServerKt")
+            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.server.services.Server")
+            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.server.services.ServerKt")
 
             server = serverKt
                 .declaredMethods

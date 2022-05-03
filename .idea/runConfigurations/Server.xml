@@ -1,8 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="xchat" type="JetRunConfigurationType">
+  <configuration default="false" name="Server" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="pl.pawelkielb.xchat.MainKt" />
-    <module name="xchat.dev" />
+    <module name="xchat.server.dev" />
     <shortenClasspath name="NONE" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
