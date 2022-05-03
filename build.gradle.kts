@@ -1,4 +1,4 @@
-import java.util.UUID
+import java.util.*
 
 plugins {
     kotlin("jvm") version "1.6.21"
@@ -39,6 +39,8 @@ dependencies {
 
     implementation("org.glassfish.jersey.containers:jersey-container-jetty-servlet:3.0.4")
     implementation("org.glassfish.jersey.inject:jersey-hk2:3.0.4")
+
+    implementation("com.github.jershell:kbson:0.4.4")
 }
 
 tasks.test {

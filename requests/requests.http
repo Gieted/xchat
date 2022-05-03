@@ -1,0 +1,53 @@
+# Channels
+### List new channels
+GET {{host}}/v1/channels?members=Davie52&createdAfterTimestamp=1651591383536
+Accept: application/json
+
+### Create a channel
+POST {{host}}/v1/channels
+Content-Type: application/json
+
+{
+  "name": "Small Talks",
+  "members": [
+    "Davie52",
+    "Neo",
+    "xGamer5000"
+  ]
+}
+
+###
+
+# Messages
+
+### List messages
+GET {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/messages
+Accept: application/json
+
+### Send a message 
+POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/messages
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!"
+}
+
+###
+
+# Files
+
+### Download a file
+GET {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files/images.zip
+Accept: */*
+
+### Send a file
+POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="hello_world.txt"
+
+Hello World!
+
+--boundary--
