@@ -1,6 +1,5 @@
 package pl.pawelkielb.xchat.server
 
-import pl.pawelkielb.xchat.server.services.Server
 import java.lang.System.getenv
 import kotlin.system.exitProcess
 

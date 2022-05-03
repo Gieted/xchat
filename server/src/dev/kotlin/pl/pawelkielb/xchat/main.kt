@@ -24,13 +24,15 @@ suspend fun main(): Unit = coroutineScope {
             }
 
             val classLoader = URLClassLoader(
-                listOf("build/classes/kotlin/main", "build/classes/java/main")
-                    .map { File(it).toURI().toURL() }
-                    .toTypedArray()
+                listOf(
+                    "build/classes/kotlin/main",
+                    "build/classes/java/main",
+                    "../shared/build/classes/java/main"
+                ).map { File(it).toURI().toURL() }.toTypedArray()
             )
 
-            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.server.services.Server")
-            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.server.services.ServerKt")
+            serverClass = classLoader.loadClass("pl.pawelkielb.xchat.server.Server")
+            val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.server.ServerKt")
 
             server = serverKt
                 .declaredMethods

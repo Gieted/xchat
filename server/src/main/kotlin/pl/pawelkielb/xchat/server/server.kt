@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.server.services
+package pl.pawelkielb.xchat.server
 
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
@@ -13,7 +13,6 @@ class Server(
     rootServlet: RootServlet,
     v1Resource: V1Resource,
     channelsResource: ChannelsResource,
-    channelResource: ChannelResource,
 ) {
     companion object {
         const val defaultPort = 8080
@@ -30,7 +29,6 @@ class Server(
                 val resourceConfig = ResourceConfig().apply {
                     register(v1Resource)
                     register(channelsResource)
-                    register(channelResource)
                 }
                 addServlet(ServletHolder(ServletContainer(resourceConfig)), "/v1/*")
             }

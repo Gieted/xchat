@@ -2,7 +2,7 @@
   <configuration default="false" name="watch" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/server" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="-t" />
       <option name="taskDescriptions">
@@ -10,7 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="classes" />
+          <option value="server:classes" />
+          <option value="shared:classes" />
         </list>
       </option>
       <option name="vmOptions" />
