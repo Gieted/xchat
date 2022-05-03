@@ -22,3 +22,6 @@ allprojects {
         options.encoding = "UTF-8"
     }
 }
+
+project.extra["kotestVersion"] = "5.2.3"
+project.extra["mockkVersion"] = "1.12.3"

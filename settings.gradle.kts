@@ -1,5 +1,7 @@
 rootProject.name = "xchat"
 
 include(
-    ":server"
+    ":server",
+    ":shared",
+    ":client"
 )
