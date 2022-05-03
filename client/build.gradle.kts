@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("pl.pawelkielb.fchat.client.Main")
+    mainClass.set("pl.pawelkielb.xchat.client.Main")
 }
 
 repositories {
@@ -28,7 +28,7 @@ tasks.create("release") {
 
     doLast {
         val bin = "build/install/client/bin"
-        file("$bin/client").renameTo(file("$bin/fchat"))
-        file("$bin/client.bat").renameTo(file("$bin/fchat.bat"))
+        file("$bin/client").renameTo(file("$bin/xchat"))
+        file("$bin/client.bat").renameTo(file("$bin/xchat.bat"))
     }
 }

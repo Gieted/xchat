@@ -3,16 +3,16 @@ import io.kotest.core.spec.style.WordSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import pl.pawelkielb.fchat.Connection
-import pl.pawelkielb.fchat.client.Client
-import pl.pawelkielb.fchat.client.Database
-import pl.pawelkielb.fchat.client.config.ChannelConfig
-import pl.pawelkielb.fchat.client.config.ClientConfig
-import pl.pawelkielb.fchat.data.Name
-import pl.pawelkielb.fchat.packets.ChannelUpdatedPacket
-import pl.pawelkielb.fchat.packets.LoginPacket
-import pl.pawelkielb.fchat.packets.RequestUpdatesPacket
-import pl.pawelkielb.fchat.packets.UpdateChannelPacket
+import pl.pawelkielb.xchat.Connection
+import pl.pawelkielb.xchat.client.Client
+import pl.pawelkielb.xchat.client.Database
+import pl.pawelkielb.xchat.client.config.ChannelConfig
+import pl.pawelkielb.xchat.client.config.ClientConfig
+import pl.pawelkielb.xchat.data.Name
+import pl.pawelkielb.xchat.packets.ChannelUpdatedPacket
+import pl.pawelkielb.xchat.packets.LoginPacket
+import pl.pawelkielb.xchat.packets.RequestUpdatesPacket
+import pl.pawelkielb.xchat.packets.UpdateChannelPacket
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -62,8 +62,12 @@ class ClientTest : WordSpec({
                 database.saveChannel(any(), any())
             }
             verify() {
-                database.saveChannel(Name.of("Coders"), ChannelConfig(channelId))
-                database.saveChannel(Name.of("Book readers"), ChannelConfig(channelId))
+                database.saveChannel(Name.of("Coders"),
+                    ChannelConfig(channelId)
+                )
+                database.saveChannel(Name.of("Book readers"),
+                    ChannelConfig(channelId)
+                )
             }
         }
 

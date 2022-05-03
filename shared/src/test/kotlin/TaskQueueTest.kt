@@ -3,7 +3,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import pl.pawelkielb.fchat.TaskQueue
+import pl.pawelkielb.xchat.TaskQueue
 import kotlin.time.Duration.Companion.seconds
 
 class TaskQueueTest : WordSpec({

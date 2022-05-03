@@ -117,4 +117,4 @@ hs_err_pid*
 
 
 test_clients/*
-!test_clients/*/fchat.properties
+!test_clients/*/xchat.properties
