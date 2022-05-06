@@ -7,6 +7,7 @@ import org.glassfish.jersey.servlet.ServletContainer
 import pl.pawelkielb.xchat.server.dagger.AppComponent
 import pl.pawelkielb.xchat.server.dagger.DaggerAppComponent
 import pl.pawelkielb.xchat.server.routes.ChannelsResource
+import pl.pawelkielb.xchat.server.routes.MessagesResource
 import pl.pawelkielb.xchat.server.routes.RootServlet
 import pl.pawelkielb.xchat.server.routes.V1Resource
 import org.eclipse.jetty.server.Server as Jetty
@@ -17,6 +18,7 @@ class Server(
     rootServlet: RootServlet,
     v1Resource: V1Resource,
     channelsResource: ChannelsResource,
+    messagesResource: MessagesResource
 ) {
     companion object {
         const val defaultPort = 8080
@@ -33,6 +35,7 @@ class Server(
                 val resourceConfig = ResourceConfig().apply {
                     register(v1Resource)
                     register(channelsResource)
+                    register(messagesResource)
                 }
                 addServlet(ServletHolder(ServletContainer(resourceConfig)), "/v1/*")
             }

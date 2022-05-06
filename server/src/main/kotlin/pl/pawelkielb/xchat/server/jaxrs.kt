@@ -3,6 +3,7 @@ package pl.pawelkielb.xchat.server
 import jakarta.ws.rs.WebApplicationException
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
+import java.util.*
 
 
 fun badRequest(message: String?) =
@@ -33,3 +34,6 @@ fun parsePageSize(pageSize: String?) =
             require(it in 1..100) { "Page size must be in a range <1, 100>" }
         }
     else null
+
+fun parseChannel(channel: String): UUID =
+    runCatching { UUID.fromString(channel) }.getOrElse { throw cannotParseException("channel", channel) }

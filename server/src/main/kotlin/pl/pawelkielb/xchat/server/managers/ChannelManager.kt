@@ -27,7 +27,7 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
             filters.add(Filters.gt(Channel::creationTimestamp.name, createdAfter.toEpochMilli()))
         }
 
-        return db.list(channels, filters, page, pageSize)
+        return db.list(channels, filters, page, pageSize, ascendingSortBy = Channel::creationTimestamp)
     }
 
     suspend fun create(name: Name, members: Set<Name>): Channel {

@@ -59,9 +59,9 @@ public class PacketEncoder {
     public byte[] toBytes(SendMessagePacket packet) {
         Properties properties = new Properties();
         properties.setProperty("type", "SendMessage");
-        properties.setProperty("author", packet.message().author().value());
+        properties.setProperty("author", packet.message().getAuthor().value());
         properties.setProperty("channel", packet.channel().toString());
-        properties.setProperty("message", packet.message().content());
+        properties.setProperty("message", packet.message().getContent());
         String packetString = propertiesToString(properties);
 
         return packetString.getBytes();

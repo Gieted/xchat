@@ -5,6 +5,7 @@ Accept: application/json
 
 ### Create a channel
 POST {{host}}/v1/channels
+Accept: application/json
 Content-Type: application/json
 
 {
@@ -21,16 +22,17 @@ Content-Type: application/json
 # Messages
 
 ### List messages
-GET {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/messages
+GET {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
 Accept: application/json
 
 ### Send a message 
-POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/messages
+POST {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
 Content-Type: application/json
 
 {
   "author": "Davie52",
-  "content": "Hello World!"
+  "content": "Hello World!2"
 }
 
 ###
@@ -43,6 +45,7 @@ Accept: */*
 
 ### Send a file
 POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files
+Accept: application/json
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary

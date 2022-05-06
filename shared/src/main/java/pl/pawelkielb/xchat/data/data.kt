@@ -24,7 +24,11 @@ data class Channel(
 data class CreateChannelRequest(val name: Name, val members: Set<Name>)
 
 @Serializable
-data class Message(val author: Name, val content: String) {
+data class Message @JvmOverloads constructor(
+    val id: UUID = UUID.randomUUID(),
+    val author: Name,
+    val content: String
+) {
     init {
         require(content.isNotBlank()) { "Content cannot be blank" }
         require(content.length <= 10000) { "A message content cannot be longer than 10000 characters" }
@@ -32,4 +36,8 @@ data class Message(val author: Name, val content: String) {
 }
 
 @Serializable
-data class MessageMongoEntry(val message: Message, val channel: Channel)
+data class MessageMongoEntry(
+    val message: Message,
+    val channel: UUID,
+    val sendingTimestamp: Instant = Instant.now()
+)

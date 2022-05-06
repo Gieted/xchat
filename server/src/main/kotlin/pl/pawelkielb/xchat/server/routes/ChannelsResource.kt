@@ -9,11 +9,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import pl.pawelkielb.xchat.data.CreateChannelRequest
-import pl.pawelkielb.xchat.server.badRequest
-import pl.pawelkielb.xchat.server.cannotParseException
+import pl.pawelkielb.xchat.server.*
 import pl.pawelkielb.xchat.server.managers.ChannelManager
-import pl.pawelkielb.xchat.server.parsePage
-import pl.pawelkielb.xchat.server.parsePageSize
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,15 +33,10 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
                     .getOrElse { throw cannotParseException(createdAfter, createdAfterString) }
             else null
 
-            val page = parsePage(pageString)
-            val pageSize = parsePageSize(pageSizeString)
+            val page = parsePage(pageString) ?: 0
+            val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
 
-            val channels = when {
-                page != null && pageSize != null -> channelManager.list(createdAfter, page, pageSize)
-                page != null && pageSize == null -> channelManager.list(createdAfter, page)
-                page == null && pageSize != null -> channelManager.list(createdAfter, pageSize = pageSize)
-                else -> channelManager.list(createdAfter)
-            }
+            val channels = channelManager.list(createdAfter, page, pageSize)
             Json.encodeToString(channels)
         }
     }
