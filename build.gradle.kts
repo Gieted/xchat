@@ -23,5 +23,5 @@ allprojects {
     }
 }
 
-project.extra["kotestVersion"] = "5.2.3"
-project.extra["mockkVersion"] = "1.12.3"
+extra["kotestVersion"] = "5.3.0"
+extra["mockkVersion"] = "1.12.3"
