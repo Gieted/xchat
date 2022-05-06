@@ -1,17 +1,19 @@
 package pl.pawelkielb.xchat.server.managers
 
 import com.mongodb.client.model.Filters
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
+import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.Name
-import pl.pawelkielb.xchat.server.Channel
+import pl.pawelkielb.xchat.server.create
 import pl.pawelkielb.xchat.server.defaultPageSize
+import pl.pawelkielb.xchat.server.list
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
+private const val channels = "channels"
 
 @Singleton
 class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
@@ -25,23 +27,12 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
             filters.add(Filters.gt(Channel::creationTimestamp.name, createdAfter.toEpochMilli()))
         }
 
-        return withContext(Dispatchers.IO) {
-            db
-                .getCollection<Channel>("channels")
-                .find(*filters.toTypedArray())
-                .skip(page * pageSize)
-                .limit(pageSize)
-                .toList()
-        }
+        return db.list(channels, filters, page, pageSize)
     }
 
     suspend fun create(name: Name, members: Set<Name>): Channel {
         val channel = Channel(name = name, members = members)
-
-        withContext(Dispatchers.IO) {
-            db.getCollection<Channel>("channels").insertOne(channel)
-        }
-
+        db.create(channels, channel)
         return channel
     }
 }

@@ -209,7 +209,7 @@ public abstract class Commands {
     }
 
     private static void printMessage(Console console, Message message) {
-        console.println(String.format("%s: %s", message.author(), message.content()));
+        console.println(String.format("%s: %s", message.getAuthor(), message.getContent()));
     }
 
     private static void doNetwork(Exceptions.Runnable_WithExceptions<Exception> runnable,

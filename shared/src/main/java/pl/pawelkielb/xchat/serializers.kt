@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.server
+package pl.pawelkielb.xchat
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

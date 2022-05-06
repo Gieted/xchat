@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization") version "1.6.21"
 }
 
 repositories {
@@ -12,4 +13,7 @@ dependencies {
 
     val mockkVersion: String by rootProject
     testImplementation("io.mockk:mockk:$mockkVersion")
+
+    compileOnly("org.mongodb:bson:4.6.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.2")
 }
