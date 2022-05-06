@@ -1,6 +1,6 @@
 # Channels
 ### List new channels
-GET {{host}}/v1/channels?members=Davie52&createdAfterTimestamp=1651591383536
+GET {{host}}/v1/channels?members=Davie52&createdAfter=1651867065155
 Accept: application/json
 
 ### Create a channel

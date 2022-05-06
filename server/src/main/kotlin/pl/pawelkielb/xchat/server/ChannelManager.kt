@@ -1,8 +1,9 @@
 package pl.pawelkielb.xchat.server
 
+import com.mongodb.client.model.Filters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.bson.Document
+import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.Name
 import java.time.Instant
@@ -17,15 +18,15 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
         page: Int = 0,
         pageSize: Int = defaultPageSize
     ): List<Channel> {
-        val query = Document()
+        val filters = mutableSetOf<Bson>()
         if (createdAfter != null) {
-            query.append("createdAfter", Document("\$gt", createdAfter.toEpochMilli()))
+            filters.add(Filters.gt(Channel::creationTimestamp.name, createdAfter.toEpochMilli()))
         }
 
         return withContext(Dispatchers.IO) {
             db
                 .getCollection<Channel>("channels")
-                .find(query)
+                .find(*filters.toTypedArray())
                 .skip(page * pageSize)
                 .limit(pageSize)
                 .toList()

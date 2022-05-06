@@ -48,10 +48,11 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
     }
 }
 
-fun badRequest(message: String?) = WebApplicationException(
-    Response
-        .status(Response.Status.BAD_REQUEST)
-        .entity(message ?: "")
-        .type(MediaType.TEXT_PLAIN)
-        .build()
-)
+private fun badRequest(message: String?) =
+    WebApplicationException(
+        Response
+            .status(Response.Status.BAD_REQUEST)
+            .entity(message ?: "")
+            .type(MediaType.TEXT_PLAIN)
+            .build()
+    )
