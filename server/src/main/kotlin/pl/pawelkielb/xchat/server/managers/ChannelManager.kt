@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.server
+package pl.pawelkielb.xchat.server.managers
 
 import com.mongodb.client.model.Filters
 import kotlinx.coroutines.Dispatchers
@@ -6,6 +6,8 @@ import kotlinx.coroutines.withContext
 import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.Name
+import pl.pawelkielb.xchat.server.Channel
+import pl.pawelkielb.xchat.server.defaultPageSize
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton

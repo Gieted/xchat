@@ -1,24 +1,17 @@
-package pl.pawelkielb.xchat.server
+package pl.pawelkielb.xchat.server.routes
 
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
-import jakarta.ws.rs.core.Response
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import pl.pawelkielb.xchat.server.CreateChannelRequest
+import pl.pawelkielb.xchat.server.managers.ChannelManager
+import pl.pawelkielb.xchat.server.utils.badRequest
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
-
-
-@Singleton
-@Path("/")
-class V1Resource @Inject constructor() {
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    fun get() = "xchat API v1"
-}
 
 @Singleton
 @Path("/channels")
@@ -47,12 +40,3 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
         Json.encodeToString(createdChannel)
     }
 }
-
-private fun badRequest(message: String?) =
-    WebApplicationException(
-        Response
-            .status(Response.Status.BAD_REQUEST)
-            .entity(message ?: "")
-            .type(MediaType.TEXT_PLAIN)
-            .build()
-    )

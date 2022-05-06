@@ -6,7 +6,11 @@ import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
 import pl.pawelkielb.xchat.server.dagger.AppComponent
 import pl.pawelkielb.xchat.server.dagger.DaggerAppComponent
+import pl.pawelkielb.xchat.server.routes.ChannelsResource
+import pl.pawelkielb.xchat.server.routes.RootServlet
+import pl.pawelkielb.xchat.server.routes.V1Resource
 import org.eclipse.jetty.server.Server as Jetty
+
 
 class Server(
     port: Int = defaultPort,
