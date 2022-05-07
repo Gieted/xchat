@@ -96,7 +96,14 @@ public class Database {
             throw new InvalidConfigException("Invalid server port", e);
         }
 
-        return new ClientConfig(username, serverHost, serverPort);
+        int lastSyncTimestamp;
+        try {
+            lastSyncTimestamp = Integer.parseInt(properties.getProperty("last_sync_timestamp"));
+        } catch (NumberFormatException e) {
+            throw new InvalidConfigException("Invalid last sync timestamp", e);
+        }
+
+        return new ClientConfig(username, serverHost, serverPort, lastSyncTimestamp);
     }
 
     /**
@@ -111,6 +118,7 @@ public class Database {
         properties.setProperty("username", clientConfig.username().value());
         properties.setProperty("server_host", clientConfig.serverHost());
         properties.setProperty("server_port", String.valueOf(clientConfig.serverPort()));
+        properties.setProperty("last_sync_timestamp", String.valueOf(clientConfig.lastSyncTimestamp()));
         Path path = rootDirectory.resolve(clientConfigFileName);
 
         writeProperties(path, properties);

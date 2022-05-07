@@ -4,7 +4,7 @@ import pl.pawelkielb.xchat.data.Name;
 
 import static java.util.Objects.requireNonNull;
 
-public record ClientConfig(Name username, String serverHost, int serverPort) {
+public record ClientConfig(Name username, String serverHost, int serverPort, int lastSyncTimestamp) {
     public ClientConfig {
         requireNonNull(username);
         requireNonNull(serverHost);
@@ -14,6 +14,6 @@ public record ClientConfig(Name username, String serverHost, int serverPort) {
     }
 
     public static ClientConfig defaults() {
-        return new ClientConfig(Name.of("Guest"), "localhost", 1337);
+        return new ClientConfig(Name.of("Guest"), "localhost", 1337, 0);
     }
 }
