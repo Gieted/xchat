@@ -15,24 +15,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
+private const val sentBefore = "sentBefore"
+
 @Singleton
 @Path("/channels/{channel}/messages")
 class MessagesResource @Inject constructor(private val messageManager: MessageManager) {
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun list(
         @PathParam("channel") channelString: String,
+        @QueryParam(sentBefore) sentBeforeString: String?,
         @QueryParam("page") pageString: String?,
-        @QueryParam("pageSize") pageSizeString: String?
+        @QueryParam("pageSize") pageSizeString: String?,
     ): String = runBlocking {
         withContext(Dispatchers.Default) {
             val channel = parseChannel(channelString)
 
+            val sentBefore = parseInstant(sentBeforeString, sentBefore)
             val page = parsePage(pageString) ?: 0
             val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
 
-            val messages = messageManager.list(channel, page, pageSize)
+            val messages = messageManager.list(channel, sentBefore, page, pageSize)
 
             Json.encodeToString(messages)
         }

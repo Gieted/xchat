@@ -8,10 +8,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import pl.pawelkielb.xchat.data.CreateChannelRequest
 import pl.pawelkielb.xchat.server.*
 import pl.pawelkielb.xchat.server.managers.ChannelManager
-import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,10 +26,7 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
         @QueryParam("pageSize") pageSizeString: String?
     ): String = runBlocking {
         withContext(Dispatchers.Default) {
-            val createdAfter = if (createdAfterString != null)
-                runCatching { Instant.ofEpochMilli(createdAfterString.toLong()) }
-                    .getOrElse { throw cannotParseException(createdAfter, createdAfterString) }
-            else null
+            val createdAfter = parseInstant(createdAfterString, createdAfter)
 
             val page = parsePage(pageString) ?: 0
             val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize

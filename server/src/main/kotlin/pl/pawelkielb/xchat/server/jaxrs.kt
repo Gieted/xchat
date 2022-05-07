@@ -3,6 +3,7 @@ package pl.pawelkielb.xchat.server
 import jakarta.ws.rs.WebApplicationException
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
+import java.time.Instant
 import java.util.*
 
 
@@ -37,3 +38,8 @@ fun parsePageSize(pageSize: String?) =
 
 fun parseChannel(channel: String): UUID =
     runCatching { UUID.fromString(channel) }.getOrElse { throw cannotParseException("channel", channel) }
+
+fun parseInstant(string: String?, parameterName: String): Instant? = if (string != null)
+    runCatching { Instant.ofEpochMilli(string.toLong()) }
+        .getOrElse { throw cannotParseException(parameterName, string) }
+else null

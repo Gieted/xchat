@@ -25,8 +25,7 @@ dependencies {
     implementation("com.google.dagger:dagger:2.41")
     kapt("com.google.dagger:dagger-compiler:2.41")
 
-    implementation("org.litote.kmongo:kmongo-coroutine:4.5.1")
-    implementation("org.litote.kmongo:kmongo-serialization:4.5.1")
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.5.1")
     implementation("io.projectreactor:reactor-core:3.4.17")
 
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")

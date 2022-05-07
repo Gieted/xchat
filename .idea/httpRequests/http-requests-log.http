@@ -1,0 +1,475 @@
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T160549.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T160545.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52
+Accept: application/json
+
+<> 2022-05-07T160459.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T160450.200.json
+
+###
+
+POST http://localhost:8080/v1/channels
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Small Talks",
+  "members": [
+    "Davie52",
+    "Neo",
+    "xGamer5000"
+  ]
+}
+
+<> 2022-05-07T160446.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T160425.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T160416.200.json
+
+###
+
+POST http://localhost:8080/v1/channels
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Small Talks",
+  "members": [
+    "Davie52",
+    "Neo",
+    "xGamer5000"
+  ]
+}
+
+<> 2022-05-07T160413.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T160411.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T160407.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T160357.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T160302.500.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T154806.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T154742.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T153429.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T153232.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!9"
+}
+
+<> 2022-05-07T153221.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!8"
+}
+
+<> 2022-05-07T153218.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!7"
+}
+
+<> 2022-05-07T153215.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!6"
+}
+
+<> 2022-05-07T153212.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!5"
+}
+
+<> 2022-05-07T153209.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!4"
+}
+
+<> 2022-05-07T153206.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928997862
+Accept: application/json
+
+<> 2022-05-07T153046.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928997862
+Accept: application/json
+
+<> 2022-05-07T153040.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!3"
+}
+
+<> 2022-05-07T153039.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928997862
+Accept: application/json
+
+<> 2022-05-07T153030.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!"
+}
+
+<> 2022-05-07T151714.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928997862
+Accept: application/json
+
+<> 2022-05-07T151017.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928997862
+Accept: application/json
+
+<> 2022-05-07T151010.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!"
+}
+
+<> 2022-05-07T150958.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!"
+}
+
+<> 2022-05-07T150952.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!"
+}
+
+<> 2022-05-07T150945.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928843245
+Accept: application/json
+
+<> 2022-05-07T150834.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928843245
+Accept: application/json
+
+<> 2022-05-07T150752.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651928843245
+Accept: application/json
+
+<> 2022-05-07T150751.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T150659.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T150558.500.json
+
+###
+
+POST http://localhost:8080/v1/channels
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Small Talks",
+  "members": [
+    "Davie52",
+    "Neo",
+    "xGamer5000"
+  ]
+}
+
+<> 2022-05-07T001720.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T001557.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!2"
+}
+
+<> 2022-05-07T001550.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!1"
+}
+
+<> 2022-05-07T001454.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T001447.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T000922.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!2"
+}
+
+<> 2022-05-07T000808.200.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!1"
+}
+
+<> 2022-05-07T000803.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T000758.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-07T000644.500.json
+
+###
+
+POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Content-Type: application/json
+
+{
+  "author": "Davie52",
+  "content": "Hello World!1"
+}
+
+<> 2022-05-07T000405.500.html
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T000349.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+Accept: application/json
+
+<> 2022-05-06T234820.200.json
+
+###
+
