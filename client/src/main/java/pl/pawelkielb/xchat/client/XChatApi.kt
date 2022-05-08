@@ -34,8 +34,8 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
             setBody(CreateChannelRequest(name, members))
         }.body()
 
-    suspend fun listMessages(channel: UUID, sentBefore: Instant?, page: Int, pageSize: Int): List<Message> {
-        return httpClient.get("$host/v1/channels/$channel/messages") {
+    suspend fun listMessages(channel: UUID, sentBefore: Instant?, page: Int, pageSize: Int): List<Message> =
+        httpClient.get("$host/v1/channels/$channel/messages") {
             accept(ContentType.Application.Json)
             authorization(user.value())
             if (sentBefore != null) {
@@ -44,7 +44,14 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
             parameter("page", page)
             parameter("pageSize", pageSize)
         }.body()
-    }
+
+    suspend fun sendMessage(channel: UUID, message: Message): Message =
+        httpClient.post("$host/v1/channels/$channel/messages") {
+            accept(ContentType.Application.Json)
+            contentType(ContentType.Application.Json)
+            authorization(user.value())
+            setBody(message)
+        }.body()
 }
 
 private fun HttpRequestBuilder.authorization(value: String) {

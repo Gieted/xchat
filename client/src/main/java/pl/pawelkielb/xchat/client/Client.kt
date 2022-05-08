@@ -76,7 +76,9 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws ProtocolException     if the server does something unexpected
      * @throws DisconnectedException if the server disconnects
      */
-    fun sendMessage(channel: UUID, message: Message) {}
+    fun sendMessage(channel: UUID, message: Message) = runBlocking {
+        api.sendMessage(channel, message)
+    }
 
     /**
      * @param channel an uuid of a channel from which you want to read the messages
@@ -106,7 +108,7 @@ class Client(private val database: Database, private val api: XChatApi, private 
                 if (newMessages.size != messagesToFetch || messagesLeft == 0) {
                     hasRemoteMessages = false
                 }
-                messagesQueue.addAll(newMessages)
+                messagesQueue.addAll(newMessages.reversed())
             }
 
             override fun hasNext(): Boolean {
