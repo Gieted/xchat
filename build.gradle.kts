@@ -15,6 +15,7 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "17"
+            freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
 

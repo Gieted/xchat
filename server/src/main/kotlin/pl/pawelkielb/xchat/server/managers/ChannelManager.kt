@@ -2,7 +2,6 @@ package pl.pawelkielb.xchat.server.managers
 
 import com.mongodb.client.model.Filters
 import org.bson.conversions.Bson
-import org.litote.kmongo.all
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.Name
@@ -26,7 +25,7 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
         pageSize: Int = defaultPageSize
     ): List<Channel> {
         val filters = mutableSetOf<Bson>()
-        filters.add(Channel::members all members)
+        filters.add(Filters.all(Channel::members.name, members.map { it.value() }))
         if (createdAfter != null) {
             filters.add(Filters.gt(creationTimestamp, createdAfter.toEpochMilli()))
         }

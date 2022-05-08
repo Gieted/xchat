@@ -159,7 +159,13 @@ public class Database {
 
     public Cache getCache() {
         var path = rootDirectory.resolve(cacheFileName);
-        return CacheKt.loadCache(path.toFile());
+        var cache = CacheKt.loadCache(path.toFile());
+        if (cache == null) {
+            cache = new Cache();
+            saveCache(cache);
+        }
+
+        return cache;
     }
 
     public void saveCache(Cache cache) {
