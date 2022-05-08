@@ -16,6 +16,6 @@ public record ClientConfig(Name username, String serverHost, int serverPort, Ins
     }
 
     public static ClientConfig defaults() {
-        return new ClientConfig(Name.of("Guest"), "localhost", 1337, Instant.EPOCH);
+        return new ClientConfig(Name.of("Guest"), "localhost", 8080, Instant.EPOCH);
     }
 }
