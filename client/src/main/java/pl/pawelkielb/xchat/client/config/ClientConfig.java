@@ -14,6 +14,6 @@ public record ClientConfig(Name username, String serverHost, int serverPort) {
     }
 
     public static ClientConfig defaults() {
-        return new ClientConfig(Name.of("Guest"), "localhost", 8080);
+        return new ClientConfig(Name.of("Guest"), "http://localhost", 8080);
     }
 }
