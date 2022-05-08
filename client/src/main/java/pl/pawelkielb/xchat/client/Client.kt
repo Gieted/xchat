@@ -152,7 +152,7 @@ class Client(private val database: Database, private val api: XChatApi, private 
      */
     @Throws(IOException::class)
     fun sendFile(channel: UUID, path: Path, progressConsumer: Consumer<Double>) {
-        TODO()
+        printNotImplementedMessage()
     }
 
     /**
@@ -170,6 +170,12 @@ class Client(private val database: Database, private val api: XChatApi, private 
      */
     @Throws(NotDirectoryException::class, ProtocolException::class)
     fun downloadFile(channel: UUID, name: Name, destinationDirectory: Path, progressConsumer: Consumer<Double>) {
-        TODO()
+        printNotImplementedMessage()
     }
+}
+
+private fun printNotImplementedMessage() {
+    println()
+    println("Sorry, but this feature is not yet implemented :)")
+    println()
 }
