@@ -44,8 +44,10 @@ public class Client {
      * @throws FileWriteException    if saving updates fails
      */
     public void sync() throws ProtocolException {
-        var channels = api.listChannels(Set.of(clientConfig.username()), clientConfig.lastSyncTimestamp());
+        var cache = database.getCache();
+        var channels = api.listChannels(Set.of(clientConfig.username()), cache.getLastSyncTimestamp());
         System.out.println(channels);
+        CacheKt.updateLastSyncTimestamp(database);
     }
 
     /**

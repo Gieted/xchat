@@ -13,8 +13,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.time.DateTimeException;
-import java.time.Instant;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -25,6 +23,7 @@ import java.util.UUID;
 public class Database {
     public static final String clientConfigFileName = "xchat.properties";
     public static final String channelProperties = "channel.properties";
+    public static final String cacheFileName = "cache.json";
 
     private final Path rootDirectory;
 
@@ -98,14 +97,7 @@ public class Database {
             throw new InvalidConfigException("Invalid server port", e);
         }
 
-        Instant lastSyncTimestamp;
-        try {
-            lastSyncTimestamp = Instant.ofEpochMilli(Long.parseLong(properties.getProperty("last_sync_timestamp")));
-        } catch (NumberFormatException | DateTimeException e) {
-            throw new InvalidConfigException("Invalid last sync timestamp", e);
-        }
-
-        return new ClientConfig(username, serverHost, serverPort, lastSyncTimestamp);
+        return new ClientConfig(username, serverHost, serverPort);
     }
 
     /**
@@ -120,7 +112,6 @@ public class Database {
         properties.setProperty("username", clientConfig.username().value());
         properties.setProperty("server_host", clientConfig.serverHost());
         properties.setProperty("server_port", String.valueOf(clientConfig.serverPort()));
-        properties.setProperty("last_sync_timestamp", String.valueOf(clientConfig.lastSyncTimestamp().toEpochMilli()));
         Path path = rootDirectory.resolve(clientConfigFileName);
 
         writeProperties(path, properties);
@@ -164,6 +155,16 @@ public class Database {
         properties.setProperty("id", channelConfig.id().toString());
 
         writeProperties(configPath, properties);
+    }
+
+    public Cache getCache() {
+        var path = rootDirectory.resolve(cacheFileName);
+        return CacheKt.loadCache(path.toFile());
+    }
+
+    public void saveCache(Cache cache) {
+        var path = rootDirectory.resolve(cacheFileName);
+        CacheKt.saveCache(path.toFile(), cache);
     }
 
     private static String sanitizeAsPath(String string) {
