@@ -1,11 +1,11 @@
-@file:UseSerializers(UUIDSerializer::class, NameSerializer::class, InstantSerializer::class)
+@file:UseSerializers(UUIDSerializer::class, NameLowercaseSerializer::class, InstantSerializer::class)
 
 package pl.pawelkielb.xchat.server
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import pl.pawelkielb.xchat.InstantSerializer
-import pl.pawelkielb.xchat.NameSerializer
+import pl.pawelkielb.xchat.NameLowercaseSerializer
 import pl.pawelkielb.xchat.UUIDSerializer
 import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name

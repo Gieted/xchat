@@ -22,6 +22,12 @@ object NameSerializer : KSerializer<Name> {
     override fun deserialize(decoder: Decoder): Name = Name.of(decoder.decodeString())
 }
 
+object NameLowercaseSerializer : KSerializer<Name> {
+    override val descriptor = PrimitiveSerialDescriptor("Name", PrimitiveKind.STRING)
+    override fun serialize(encoder: Encoder, value: Name) = encoder.encodeString(value.value().lowercase())
+    override fun deserialize(decoder: Decoder): Name = Name.of(decoder.decodeString())
+}
+
 object InstantSerializer : KSerializer<Instant> {
     override val descriptor = PrimitiveSerialDescriptor("Instant", PrimitiveKind.LONG)
     override fun serialize(encoder: Encoder, value: Instant) = encoder.encodeLong(value.toEpochMilli())

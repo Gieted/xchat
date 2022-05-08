@@ -39,8 +39,7 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
     }
 
     suspend fun create(name: Name?, members: Set<Name>, accessingUser: Name): Channel {
-        val membersLowercase = members.map { Name.of(it.value().lowercase()) }.toSet()
-        val channel = ChannelMongoEntry(name = name, members = membersLowercase)
+        val channel = ChannelMongoEntry(name = name, members = members)
         db.create(channels, channel)
 
         return channel.toChannel(accessingUser)
