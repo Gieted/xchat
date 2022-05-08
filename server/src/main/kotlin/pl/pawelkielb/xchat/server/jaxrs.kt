@@ -1,8 +1,11 @@
 package pl.pawelkielb.xchat.server
 
+import jakarta.ws.rs.NotAuthorizedException
 import jakarta.ws.rs.WebApplicationException
+import jakarta.ws.rs.core.HttpHeaders
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
+import pl.pawelkielb.xchat.data.Name
 import java.time.Instant
 import java.util.*
 
@@ -43,3 +46,21 @@ fun parseInstant(string: String?, parameterName: String): Instant? = if (string 
     runCatching { Instant.ofEpochMilli(string.toLong()) }
         .getOrElse { throw cannotParseException(parameterName, string) }
 else null
+
+fun parseUser(headers: HttpHeaders): Name {
+    val authHeaders = headers.getRequestHeader(HttpHeaders.AUTHORIZATION) ?: emptyList()
+
+    if (authHeaders.isEmpty()) throw NotAuthorizedException("Authorization header missing")
+
+    if (authHeaders.size != 1) {
+        throw NotAuthorizedException("Multiple authorization headers not allowed")
+    }
+
+    val nameString = authHeaders.single()
+
+    return try {
+        Name.of(nameString)
+    } catch (e: IllegalArgumentException) {
+        throw NotAuthorizedException("Authorization must be a valid name", e)
+    }
+}

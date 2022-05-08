@@ -57,7 +57,8 @@ class Client(private val database: Database, private val api: XChatApi, private 
      */
     @Throws(ProtocolException::class)
     fun createGroupChannel(name: Name?, members: Set<Name>) = runBlocking {
-        api.createChannel(name, members)
+        api.createChannel(name, members + clientConfig.username)
+        sync()
     }
 
     /**

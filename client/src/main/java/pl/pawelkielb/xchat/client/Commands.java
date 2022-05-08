@@ -69,7 +69,11 @@ public abstract class Commands {
         var httpClient = Ktor.createClient(logger);
         applicationExitEvent.subscribe(event -> httpClient.close());
 
-        var api = new XChatApi(httpClient, clientConfig.serverHost() + ":" + clientConfig.serverPort());
+        var api = new XChatApi(
+                httpClient,
+                clientConfig.serverHost() + ":" + clientConfig.serverPort(),
+                clientConfig.username()
+        );
         Client client = new Client(database, api, clientConfig);
 
         switch (command) {

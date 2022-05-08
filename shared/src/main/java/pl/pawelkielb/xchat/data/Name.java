@@ -49,11 +49,11 @@ public final class Name {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Name other) {
-            return this.value.equals(other.value);
+            return this.value.equalsIgnoreCase(other.value);
         }
 
         if (obj instanceof String other) {
-            return this.value.equals(other);
+            return this.value.equalsIgnoreCase(other);
         }
 
         return false;
@@ -61,6 +61,6 @@ public final class Name {
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return value.toLowerCase().hashCode();
     }
 }

@@ -5,9 +5,7 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.Name
-import pl.pawelkielb.xchat.server.create
-import pl.pawelkielb.xchat.server.defaultPageSize
-import pl.pawelkielb.xchat.server.list
+import pl.pawelkielb.xchat.server.*
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,26 +20,29 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
         members: Set<Name>,
         createdAfter: Instant? = null,
         page: Int = 0,
-        pageSize: Int = defaultPageSize
+        pageSize: Int = defaultPageSize,
+        accessingUser: Name
     ): List<Channel> {
         val filters = mutableSetOf<Bson>()
-        filters.add(Filters.all(Channel::members.name, members.map { it.value() }))
+        filters.add(Filters.all(Channel::members.name, members.map { it.value().lowercase() }))
         if (createdAfter != null) {
             filters.add(Filters.gt(creationTimestamp, createdAfter.toEpochMilli()))
         }
 
-        return db.list(
+        return db.list<ChannelMongoEntry>(
             channels,
             filters,
             page,
             pageSize,
             ascendingSortBy = Channel::creationTimestamp
-        )
+        ).map { it.toChannel(accessingUser) }
     }
 
-    suspend fun create(name: Name, members: Set<Name>): Channel {
-        val channel = Channel(name = name, members = members)
+    suspend fun create(name: Name?, members: Set<Name>, accessingUser: Name): Channel {
+        val membersLowercase = members.map { Name.of(it.value().lowercase()) }.toSet()
+        val channel = ChannelMongoEntry(name = name, members = membersLowercase)
         db.create(channels, channel)
-        return channel
+
+        return channel.toChannel(accessingUser)
     }
 }

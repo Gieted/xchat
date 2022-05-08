@@ -8,8 +8,18 @@ import pl.pawelkielb.xchat.InstantSerializer
 import pl.pawelkielb.xchat.NameSerializer
 import pl.pawelkielb.xchat.UUIDSerializer
 import pl.pawelkielb.xchat.data.Message
+import pl.pawelkielb.xchat.data.Name
+import java.time.Instant
 import java.util.*
 
+
+@Serializable
+data class ChannelMongoEntry(
+    val _id: UUID = UUID.randomUUID(),
+    val name: Name?,
+    val members: Set<Name>,
+    val creationTimestamp: Instant = Instant.now()
+)
 
 @Serializable
 data class MessageMongoEntry(

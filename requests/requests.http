@@ -1,11 +1,13 @@
 ### List new channels
 GET {{host}}/v1/channels?members=Davie52&createdAfter=1651867065155
 Accept: application/json
+Authorization: Pawel
 
 ### Create a channel
 POST {{host}}/v1/channels
 Accept: application/json
 Content-Type: application/json
+Authorization: Pawel
 
 {
   "name": "Small Talks",
@@ -19,25 +21,29 @@ Content-Type: application/json
 ### List messages
 GET {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
 Accept: application/json
+Authorization: Pawel
 
 ### Send a message 
 POST {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
 Accept: application/json
 Content-Type: application/json
+Authorization: Pawel
 
 {
-  "author": "Davie52",
+  "author": "Pawel",
   "content": "Hello World!9"
 }
 
 ### Download a file
 GET {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files/images.zip
 Accept: */*
+Authorization: Pawel
 
 ### Send a file
 POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files
 Accept: application/json
 Content-Type: multipart/form-data; boundary=boundary
+Authorization: Pawel
 
 --boundary
 Content-Disposition: form-data; name="file"; filename="hello_world.txt"
