@@ -1,11 +1,14 @@
 package pl.pawelkielb.xchat.server.managers
 
 import com.mongodb.client.model.Filters
-import org.bson.Document
 import org.bson.conversions.Bson
+import org.litote.kmongo.all
 import org.litote.kmongo.coroutine.CoroutineDatabase
+import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.Name
-import pl.pawelkielb.xchat.server.*
+import pl.pawelkielb.xchat.server.create
+import pl.pawelkielb.xchat.server.defaultPageSize
+import pl.pawelkielb.xchat.server.list
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,11 +20,13 @@ private val creationTimestamp = Channel::creationTimestamp.name
 @Singleton
 class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
     suspend fun list(
+        members: Set<Name>,
         createdAfter: Instant? = null,
         page: Int = 0,
         pageSize: Int = defaultPageSize
     ): List<Channel> {
         val filters = mutableSetOf<Bson>()
+        filters.add(Channel::members all members)
         if (createdAfter != null) {
             filters.add(Filters.gt(creationTimestamp, createdAfter.toEpochMilli()))
         }
@@ -31,7 +36,7 @@ class ChannelManager @Inject constructor(private val db: CoroutineDatabase) {
             filters,
             page,
             pageSize,
-            sortCriteria = Document(creationTimestamp, SortDirection.ascending)
+            ascendingSortBy = Channel::creationTimestamp
         )
     }
 

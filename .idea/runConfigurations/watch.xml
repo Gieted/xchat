@@ -12,6 +12,7 @@
         <list>
           <option value="server:classes" />
           <option value="shared:classes" />
+          <option value="client:release" />
         </list>
       </option>
       <option name="vmOptions" />

@@ -1,6 +1,9 @@
 package pl.pawelkielb.xchat.client;
 
-import pl.pawelkielb.xchat.*;
+import pl.pawelkielb.xchat.Exceptions;
+import pl.pawelkielb.xchat.Logger;
+import pl.pawelkielb.xchat.Observable;
+import pl.pawelkielb.xchat.PacketEncoder;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
@@ -62,17 +65,11 @@ public abstract class Commands {
 
         Logger logger = new FileLogger(logsPath, applicationExitEvent);
 
-        Connection connection = new Connection(
-                packetEncoder,
-                clientConfig.serverHost(),
-                clientConfig.serverPort(),
-                executor,
-                executor,
-                logger,
-                applicationExitEvent
-        );
+        var httpClient = Ktor.createClient(logger);
+        applicationExitEvent.subscribe(event -> httpClient.close());
 
-        Client client = new Client(database, connection, clientConfig);
+        var api = new XChatApi(httpClient, clientConfig.serverHost() + ":" + clientConfig.serverPort());
+        Client client = new Client(database, api, clientConfig);
 
         switch (command) {
             case "create" -> {

@@ -8,6 +8,8 @@ import pl.pawelkielb.xchat.InstantSerializer
 import pl.pawelkielb.xchat.NameSerializer
 import pl.pawelkielb.xchat.UUIDSerializer
 import java.time.Instant
+import java.util.*
+
 
 @Serializable
 data class Message @JvmOverloads constructor(
@@ -20,3 +22,14 @@ data class Message @JvmOverloads constructor(
         require(content.length <= 10000) { "A message content cannot be longer than 10000 characters" }
     }
 }
+
+@Serializable
+data class Channel(
+    val id: UUID = UUID.randomUUID(),
+    val name: Name,
+    val members: Set<Name>,
+    val creationTimestamp: Instant = Instant.now()
+)
+
+@Serializable
+data class CreateChannelRequest(val name: Name, val members: Set<Name>)

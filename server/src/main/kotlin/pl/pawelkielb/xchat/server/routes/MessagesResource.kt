@@ -4,7 +4,6 @@ import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,18 +26,16 @@ class MessagesResource @Inject constructor(private val messageManager: MessageMa
         @QueryParam(sentBefore) sentBeforeString: String?,
         @QueryParam("page") pageString: String?,
         @QueryParam("pageSize") pageSizeString: String?,
-    ): String = runBlocking {
-        withContext(Dispatchers.Default) {
-            val channel = parseChannel(channelString)
+    ): String = runBlocking(Dispatchers.Default) {
+        val channel = parseChannel(channelString)
 
-            val sentBefore = parseInstant(sentBeforeString, sentBefore)
-            val page = parsePage(pageString) ?: 0
-            val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
+        val sentBefore = parseInstant(sentBeforeString, sentBefore)
+        val page = parsePage(pageString) ?: 0
+        val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
 
-            val messages = messageManager.list(channel, sentBefore, page, pageSize)
+        val messages = messageManager.list(channel, sentBefore, page, pageSize)
 
-            Json.encodeToString(messages)
-        }
+        Json.encodeToString(messages)
     }
 
     @POST
@@ -47,16 +44,14 @@ class MessagesResource @Inject constructor(private val messageManager: MessageMa
     fun send(
         @PathParam("channel") channelString: String,
         messageJson: String
-    ) = runBlocking {
-        withContext(Dispatchers.Default) {
-            val channel = parseChannel(channelString)
+    ) = runBlocking(Dispatchers.Default) {
+        val channel = parseChannel(channelString)
 
-            val message = runCatching { Json.decodeFromString<Message>(messageJson) }.getOrElse {
-                throw badRequest(it.message)
-            }
-
-            messageManager.sendMessage(channel, message)
-            Json.encodeToString(message)
+        val message = runCatching { Json.decodeFromString<Message>(messageJson) }.getOrElse {
+            throw badRequest(it.message)
         }
+
+        messageManager.sendMessage(channel, message)
+        Json.encodeToString(message)
     }
 }

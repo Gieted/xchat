@@ -2,9 +2,11 @@ package pl.pawelkielb.xchat.client.config;
 
 import pl.pawelkielb.xchat.data.Name;
 
+import java.time.Instant;
+
 import static java.util.Objects.requireNonNull;
 
-public record ClientConfig(Name username, String serverHost, int serverPort, int lastSyncTimestamp) {
+public record ClientConfig(Name username, String serverHost, int serverPort, Instant lastSyncTimestamp) {
     public ClientConfig {
         requireNonNull(username);
         requireNonNull(serverHost);
@@ -14,6 +16,6 @@ public record ClientConfig(Name username, String serverHost, int serverPort, int
     }
 
     public static ClientConfig defaults() {
-        return new ClientConfig(Name.of("Guest"), "localhost", 1337, 0);
+        return new ClientConfig(Name.of("Guest"), "localhost", 1337, Instant.EPOCH);
     }
 }

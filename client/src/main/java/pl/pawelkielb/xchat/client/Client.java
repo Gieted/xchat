@@ -1,8 +1,6 @@
 package pl.pawelkielb.xchat.client;
 
-import pl.pawelkielb.xchat.Connection;
-import pl.pawelkielb.xchat.StringUtils;
-import pl.pawelkielb.xchat.client.config.ChannelConfig;
+import kotlin.NotImplementedError;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.FileReadException;
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException;
@@ -10,24 +8,17 @@ import pl.pawelkielb.xchat.data.Message;
 import pl.pawelkielb.xchat.data.Name;
 import pl.pawelkielb.xchat.exceptions.DisconnectedException;
 import pl.pawelkielb.xchat.exceptions.NetworkException;
-import pl.pawelkielb.xchat.packets.*;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ProtocolException;
-import java.nio.file.*;
-import java.util.Iterator;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import static pl.pawelkielb.xchat.Exceptions.throwAsUnchecked;
-import static pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes;
 
 
 /**
@@ -35,13 +26,12 @@ import static pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes;
  */
 public class Client {
     private final Database database;
-    private final Connection connection;
+    private final XChatApi api;
     private final ClientConfig clientConfig;
-    private boolean loggedIn = false;
 
-    public Client(Database database, Connection connection, ClientConfig clientConfig) {
+    public Client(Database database, XChatApi api, ClientConfig clientConfig) {
         this.database = database;
-        this.connection = connection;
+        this.api = api;
         this.clientConfig = clientConfig;
     }
 
@@ -54,24 +44,8 @@ public class Client {
      * @throws FileWriteException    if saving updates fails
      */
     public void sync() throws ProtocolException {
-        login();
-
-        doSync(() -> connection.sendPacket(new RequestUpdatesPacket()));
-
-        while (true) {
-            var packet = doSync(connection::readPacket);
-
-            if (packet == null) {
-                break;
-            }
-
-            if (packet instanceof ChannelUpdatedPacket channelUpdatedPacket) {
-                var channelConfig = new ChannelConfig(channelUpdatedPacket.channel());
-                database.saveChannel(channelUpdatedPacket.name(), channelConfig);
-            } else {
-                throw new ProtocolException();
-            }
-        }
+        var channels = api.listChannels(Set.of(clientConfig.username()), clientConfig.lastSyncTimestamp());
+        System.out.println(channels);
     }
 
     /**
@@ -92,12 +66,7 @@ public class Client {
      * @throws DisconnectedException if the server disconnects
      */
     public void createGroupChannel(Name name, List<Name> members) throws ProtocolException {
-        login();
 
-        var channelId = UUID.randomUUID();
-        var updateChannelPacket = new UpdateChannelPacket(channelId, name, members);
-        doSync(() -> connection.sendPacket(updateChannelPacket));
-        sync();
     }
 
     /**
@@ -108,10 +77,7 @@ public class Client {
      * @throws DisconnectedException if the server disconnects
      */
     public void sendMessage(UUID channel, Message message) {
-        login();
 
-        var sendMessagePacket = new SendMessagePacket(channel, message);
-        doSync(() -> connection.sendPacket(sendMessagePacket));
     }
 
     /**
@@ -124,57 +90,7 @@ public class Client {
      * @throws DisconnectedException if the server disconnects
      */
     public Iterable<Message> readMessages(UUID channel, int count) {
-        login();
-
-        var requestMessagesPacket = new RequestMessagesPacket(channel, count);
-        doSync(() -> connection.sendPacket(requestMessagesPacket));
-
-        var iterator = new Iterator<Message>() {
-            boolean finished = false;
-            Message nextMessage = null;
-
-            void getNext() {
-                var packet = doSync(connection::readPacket);
-
-                if (packet == null) {
-                    finished = true;
-                    return;
-                }
-
-                if (packet instanceof SendMessagePacket sendMessagePacket) {
-                    nextMessage = sendMessagePacket.message();
-                } else {
-                    throwAsUnchecked(new ProtocolException());
-                }
-            }
-
-            @Override
-            public boolean hasNext() {
-                if (nextMessage == null && !finished) {
-                    getNext();
-                }
-
-                return !finished;
-            }
-
-            @Override
-            public Message next() {
-                if (finished) {
-                    throw new NoSuchElementException();
-                }
-
-                if (nextMessage == null) {
-                    getNext();
-                }
-
-                var message = nextMessage;
-                nextMessage = null;
-
-                return message;
-            }
-        };
-
-        return () -> iterator;
+        throw new NotImplementedError();
     }
 
     public static class NotFileException extends RuntimeException {
@@ -193,35 +109,7 @@ public class Client {
      * @throws FileReadException     if reading the file fails
      */
     public void sendFile(UUID channel, Path path, Consumer<Double> progressConsumer) throws IOException {
-        if (!Files.exists(path)) {
-            throw new NoSuchFileException(path.toString());
-        }
-
-        if (!Files.isRegularFile(path)) {
-            throw new NotFileException();
-        }
-
-        login();
-
-        var totalSize = Files.size(path);
-        long bytesSent = 0;
-
-        var sendFilePacket = new SendFilePacket(channel, Name.of(path.getFileName().toString()), Files.size(path));
-        doSync(() -> connection.sendPacket(sendFilePacket));
-
-        try (InputStream inputStream = Files.newInputStream(path)) {
-            while (true) {
-                doSync(connection::readPacket);
-                var nextBytes = inputStream.readNBytes(fileChunkSizeInBytes);
-                doSync(() -> connection.sendBytes(nextBytes));
-                bytesSent += nextBytes.length;
-                progressConsumer.accept(((double) bytesSent) / totalSize);
-
-                if (nextBytes.length == 0) {
-                    break;
-                }
-            }
-        }
+        throw new NotImplementedError();
     }
 
     /**
@@ -240,84 +128,6 @@ public class Client {
     public void downloadFile(UUID channel, Name name, Path destinationDirectory, Consumer<Double> progressConsumer)
             throws NotDirectoryException, ProtocolException {
 
-        if (!Files.isDirectory(destinationDirectory)) {
-            throw new NotDirectoryException(destinationDirectory.toString());
-        }
-
-        login();
-
-        doSync(() -> connection.sendPacket(new RequestFilePacket(channel, name)));
-        var packet = doSync(connection::readPacket);
-
-        if (packet == null) {
-            throw new NoSuchElementException(name.toString());
-        }
-
-        long fileSize;
-        if (packet instanceof SendFilePacket sendFilePacket) {
-            fileSize = sendFilePacket.size();
-        } else {
-            throw new ProtocolException();
-        }
-
-        long bytesWritten = 0;
-
-        var filename = name.toString();
-        Path filePath = null;
-        OutputStream output = null;
-
-        // find unused file name
-        while (output == null) {
-            filePath = destinationDirectory.resolve(filename);
-
-            try {
-                output = Files.newOutputStream(filePath, StandardOpenOption.CREATE);
-            } catch (FileAlreadyExistsException e) {
-                filename = StringUtils.incrementFileName(filename);
-            } catch (IOException e) {
-                throw new FileWriteException(filePath, e);
-            }
-        }
-
-        while (true) {
-            var nextBytes = doSync(connection::readBytes);
-            try {
-                output.write(nextBytes);
-            } catch (IOException e) {
-                throw new FileWriteException(filePath, e);
-            }
-            bytesWritten += nextBytes.length;
-            progressConsumer.accept(((double) bytesWritten) / fileSize);
-
-            if (nextBytes.length != 0) {
-                doSync(() -> connection.sendPacket(null));
-            } else {
-                break;
-            }
-        }
-
-        try {
-            output.close();
-        } catch (IOException e) {
-            throw new FileWriteException(filePath, e);
-        }
-    }
-
-    private <T> T doSync(Supplier<CompletableFuture<T>> fn) {
-        try {
-            return fn.get().get();
-        } catch (ExecutionException e) {
-            throwAsUnchecked(e.getCause());
-            throw new AssertionError(e);
-        } catch (InterruptedException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    private void login() {
-        if (!loggedIn) {
-            doSync(() -> connection.sendPacket(new LoginPacket(clientConfig.username())));
-            loggedIn = true;
-        }
+        throw new NotImplementedError();
     }
 }

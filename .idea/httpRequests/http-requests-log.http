@@ -1,3 +1,88 @@
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-08T095258.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-08T095056.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-08T094803.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-08T094702.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T203611.200.json
+
+###
+
+GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+Accept: application/json
+
+<> 2022-05-07T203600.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T203535.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T203527.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T203510.200.json
+
+###
+
+GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
+Accept: application/json
+
+<> 2022-05-07T202935.200.json
+
+###
+
 GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
 Accept: application/json
 
@@ -340,136 +425,6 @@ GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messa
 Accept: application/json
 
 <> 2022-05-07T150558.500.json
-
-###
-
-POST http://localhost:8080/v1/channels
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "Small Talks",
-  "members": [
-    "Davie52",
-    "Neo",
-    "xGamer5000"
-  ]
-}
-
-<> 2022-05-07T001720.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-07T001557.200.json
-
-###
-
-POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-Content-Type: application/json
-
-{
-  "author": "Davie52",
-  "content": "Hello World!2"
-}
-
-<> 2022-05-07T001550.200.json
-
-###
-
-POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-Content-Type: application/json
-
-{
-  "author": "Davie52",
-  "content": "Hello World!1"
-}
-
-<> 2022-05-07T001454.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-07T001447.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-07T000922.200.json
-
-###
-
-POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-Content-Type: application/json
-
-{
-  "author": "Davie52",
-  "content": "Hello World!2"
-}
-
-<> 2022-05-07T000808.200.json
-
-###
-
-POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-Content-Type: application/json
-
-{
-  "author": "Davie52",
-  "content": "Hello World!1"
-}
-
-<> 2022-05-07T000803.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-07T000758.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-07T000644.500.json
-
-###
-
-POST http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Content-Type: application/json
-
-{
-  "author": "Davie52",
-  "content": "Hello World!1"
-}
-
-<> 2022-05-07T000405.500.html
-
-###
-
-GET http://localhost:8080/v1/channels?members=Davie52&createdAfter=1651867065155
-Accept: application/json
-
-<> 2022-05-07T000349.200.json
-
-###
-
-GET http://localhost:8080/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
-Accept: application/json
-
-<> 2022-05-06T234820.200.json
 
 ###
 

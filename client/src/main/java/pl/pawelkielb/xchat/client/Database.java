@@ -13,6 +13,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.time.DateTimeException;
+import java.time.Instant;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -96,10 +98,10 @@ public class Database {
             throw new InvalidConfigException("Invalid server port", e);
         }
 
-        int lastSyncTimestamp;
+        Instant lastSyncTimestamp;
         try {
-            lastSyncTimestamp = Integer.parseInt(properties.getProperty("last_sync_timestamp"));
-        } catch (NumberFormatException e) {
+            lastSyncTimestamp = Instant.ofEpochMilli(Long.parseLong(properties.getProperty("last_sync_timestamp")));
+        } catch (NumberFormatException | DateTimeException e) {
             throw new InvalidConfigException("Invalid last sync timestamp", e);
         }
 
@@ -118,7 +120,7 @@ public class Database {
         properties.setProperty("username", clientConfig.username().value());
         properties.setProperty("server_host", clientConfig.serverHost());
         properties.setProperty("server_port", String.valueOf(clientConfig.serverPort()));
-        properties.setProperty("last_sync_timestamp", String.valueOf(clientConfig.lastSyncTimestamp()));
+        properties.setProperty("last_sync_timestamp", String.valueOf(clientConfig.lastSyncTimestamp().toEpochMilli()));
         Path path = rootDirectory.resolve(clientConfigFileName);
 
         writeProperties(path, properties);
@@ -165,7 +167,7 @@ public class Database {
     }
 
     private static String sanitizeAsPath(String string) {
-        return string.replaceAll("[^0-9a-zA-z ]", "");
+        return string.replaceAll("[^\\da-zA-z ]", "");
     }
 
     private static Properties readProperties(Path path) {

@@ -19,6 +19,11 @@ dependencies {
 
     val mockkVersion: String by rootProject
     testImplementation("io.mockk:mockk:$mockkVersion")
+
+    val ktorVersion = "2.0.1"
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
 }
 
 

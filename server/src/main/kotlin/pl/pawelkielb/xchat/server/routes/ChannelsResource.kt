@@ -4,10 +4,11 @@ import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import pl.pawelkielb.xchat.data.CreateChannelRequest
+import pl.pawelkielb.xchat.data.Name
 import pl.pawelkielb.xchat.server.*
 import pl.pawelkielb.xchat.server.managers.ChannelManager
 import javax.inject.Inject
@@ -21,32 +22,30 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun list(
+        @QueryParam("members") membersString: String?,
         @QueryParam(createdAfter) createdAfterString: String?,
         @QueryParam("page") pageString: String?,
         @QueryParam("pageSize") pageSizeString: String?
-    ): String = runBlocking {
-        withContext(Dispatchers.Default) {
-            val createdAfter = parseInstant(createdAfterString, createdAfter)
+    ): String = runBlocking(Dispatchers.Default) {
+        val members = membersString?.split(",")?.map { Name.of(it) }?.toSet() ?: emptySet()
+        val createdAfter = parseInstant(createdAfterString, createdAfter)
 
-            val page = parsePage(pageString) ?: 0
-            val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
+        val page = parsePage(pageString) ?: 0
+        val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
 
-            val channels = channelManager.list(createdAfter, page, pageSize)
-            Json.encodeToString(channels)
-        }
+        val channels = channelManager.list(members, createdAfter, page, pageSize)
+        Json.encodeToString(channels)
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun create(createChannelRequestJson: String) = runBlocking {
-        withContext(Dispatchers.Default) {
-            val createChannelRequest = runCatching {
-                Json.decodeFromString<CreateChannelRequest>(createChannelRequestJson)
-            }.getOrElse { throw badRequest(it.message) }
+    fun create(createChannelRequestJson: String) = runBlocking(Dispatchers.Default) {
+        val createChannelRequest = runCatching {
+            Json.decodeFromString<CreateChannelRequest>(createChannelRequestJson)
+        }.getOrElse { throw badRequest(it.message) }
 
-            val createdChannel = channelManager.create(createChannelRequest.name, createChannelRequest.members)
-            Json.encodeToString(createdChannel)
-        }
+        val createdChannel = channelManager.create(createChannelRequest.name, createChannelRequest.members)
+        Json.encodeToString(createdChannel)
     }
 }
