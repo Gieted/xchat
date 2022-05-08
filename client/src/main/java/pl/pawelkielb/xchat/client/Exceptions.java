@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat;
+package pl.pawelkielb.xchat.client;
 
 public abstract class Exceptions {
     @SuppressWarnings("unchecked")

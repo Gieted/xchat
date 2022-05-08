@@ -1,7 +1,5 @@
 package pl.pawelkielb.xchat.client;
 
-import pl.pawelkielb.xchat.Observable;
-import pl.pawelkielb.xchat.PacketEncoder;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
@@ -9,7 +7,6 @@ import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import static pl.pawelkielb.xchat.client.Database.readChannelConfig;
 
@@ -53,8 +50,6 @@ public class Main {
                 }
             }
 
-            PacketEncoder packetEncoder = new PacketEncoder();
-            Executor executor = Runnable::run;
             Console console = new Console();
             Observable<Void> applicationExitEvent = new Observable<>();
 
@@ -67,8 +62,6 @@ public class Main {
                     channelConfig,
                     console,
                     database,
-                    packetEncoder,
-                    executor,
                     applicationExitEvent
             );
 

@@ -1,17 +1,15 @@
 package pl.pawelkielb.xchat.client;
 
-import pl.pawelkielb.xchat.Exceptions;
-import pl.pawelkielb.xchat.Logger;
-import pl.pawelkielb.xchat.Observable;
-import pl.pawelkielb.xchat.PacketEncoder;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
+import pl.pawelkielb.xchat.client.exceptions.DisconnectedException;
 import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException;
+import pl.pawelkielb.xchat.client.exceptions.NetworkException;
+import pl.pawelkielb.xchat.client.logger.FileLogger;
+import pl.pawelkielb.xchat.client.logger.Logger;
 import pl.pawelkielb.xchat.data.Message;
 import pl.pawelkielb.xchat.data.Name;
-import pl.pawelkielb.xchat.exceptions.DisconnectedException;
-import pl.pawelkielb.xchat.exceptions.NetworkException;
 
 import java.net.ProtocolException;
 import java.nio.file.NoSuchFileException;
@@ -19,11 +17,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static pl.pawelkielb.xchat.Exceptions.throwAsUnchecked;
+import static pl.pawelkielb.xchat.client.Exceptions.throwAsUnchecked;
 
 
 public abstract class Commands {
@@ -33,8 +30,6 @@ public abstract class Commands {
                                ChannelConfig channelConfig,
                                Console console,
                                Database database,
-                               PacketEncoder packetEncoder,
-                               Executor executor,
                                Observable<Void> applicationExitEvent) {
 
         if (command.equals("init")) {

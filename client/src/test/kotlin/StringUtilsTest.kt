@@ -1,6 +1,6 @@
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
-import pl.pawelkielb.xchat.StringUtils
+import pl.pawelkielb.xchat.client.utils.StringUtils
 
 class StringUtilsTest : WordSpec({
     "increment()" should {

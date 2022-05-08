@@ -3,12 +3,12 @@ package pl.pawelkielb.xchat.client
 import kotlinx.coroutines.runBlocking
 import pl.pawelkielb.xchat.client.config.ChannelConfig
 import pl.pawelkielb.xchat.client.config.ClientConfig
+import pl.pawelkielb.xchat.client.exceptions.DisconnectedException
 import pl.pawelkielb.xchat.client.exceptions.FileReadException
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException
+import pl.pawelkielb.xchat.client.exceptions.NetworkException
 import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name
-import pl.pawelkielb.xchat.exceptions.DisconnectedException
-import pl.pawelkielb.xchat.exceptions.NetworkException
 import pl.pawelkielb.xchat.maxPageSize
 import java.io.IOException
 import java.net.ProtocolException

@@ -1,10 +1,10 @@
 package pl.pawelkielb.xchat.client;
 
-import pl.pawelkielb.xchat.StringUtils;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.FileReadException;
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException;
+import pl.pawelkielb.xchat.client.utils.StringUtils;
 import pl.pawelkielb.xchat.data.Name;
 
 import java.io.IOException;

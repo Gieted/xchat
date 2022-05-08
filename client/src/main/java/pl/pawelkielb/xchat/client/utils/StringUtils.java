@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat;
+package pl.pawelkielb.xchat.client.utils;
 
 import java.util.Arrays;
 import java.util.List;

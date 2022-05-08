@@ -1,4 +1,4 @@
-package pl.pawelkielb.xchat.exceptions;
+package pl.pawelkielb.xchat.client.exceptions;
 
 import java.io.IOException;
 

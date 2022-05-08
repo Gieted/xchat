@@ -1,14 +1,13 @@
-package pl.pawelkielb.xchat.client;
+package pl.pawelkielb.xchat.client.logger;
 
-import pl.pawelkielb.xchat.Logger;
-import pl.pawelkielb.xchat.Observable;
+import pl.pawelkielb.xchat.client.Observable;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static pl.pawelkielb.xchat.Functions.rc;
+import static pl.pawelkielb.xchat.client.Functions.rc;
 
 /**
  * A {@link Logger} that logs to a file.

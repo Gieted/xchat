@@ -1,10 +1,8 @@
 package pl.pawelkielb.xchat.client.exceptions;
 
-import pl.pawelkielb.xchat.Exceptions;
 import pl.pawelkielb.xchat.client.Database;
+import pl.pawelkielb.xchat.client.Exceptions;
 import pl.pawelkielb.xchat.client.Main;
-import pl.pawelkielb.xchat.exceptions.DisconnectedException;
-import pl.pawelkielb.xchat.exceptions.NetworkException;
 
 import java.net.ProtocolException;
 import java.util.ArrayList;
