@@ -12,6 +12,7 @@ import io.ktor.client.plugins.logging.Logger as KtorLogger
 
 
 fun createClient(logger: Logger) = HttpClient(CIO) {
+    expectSuccess = true
     install(Logging) {
         this.logger = object : KtorLogger {
             override fun log(message: String) = logger.info(message)

@@ -27,7 +27,7 @@ fun parsePage(page: String?) =
         runCatching { page.toInt() }.getOrElse { throw cannotParseException("page", page) }
             .also {
                 // validate it
-                require(it > 0) { throw badRequest("Page cannot be lower than 0") }
+                require(it >= 0) { throw badRequest("Page cannot be lower than 0") }
             }
     else null
 
@@ -35,7 +35,7 @@ fun parsePageSize(pageSize: String?) =
     if (pageSize != null)
         runCatching { pageSize.toInt() }.getOrElse { throw cannotParseException("pageSize", pageSize) }.also {
             // validate it
-            require(it in 1..100) { "Page size must be in a range <1, 100>" }
+            require(it in 1..100) { "Page size must be in a range <1, 100>, was $pageSize" }
         }
     else null
 

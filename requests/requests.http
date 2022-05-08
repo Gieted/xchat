@@ -1,5 +1,5 @@
 ### List new channels
-GET {{host}}/v1/channels?members=Davie52&createdAfter=1651867065155
+GET {{host}}/v1/channels?members=damian&createdAfter=1651867065155
 Accept: application/json
 Authorization: Pawel
 
@@ -19,19 +19,19 @@ Authorization: Pawel
 }
 
 ### List messages
-GET {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages?sentBefore=1651930347028
+GET {{host}}/v1/channels/467738a3-782d-4c43-90e0-9c30f7c74b48/messages?sentBefore=1652039820413
 Accept: application/json
 Authorization: Pawel
 
 ### Send a message 
-POST {{host}}/v1/channels/f7a470e6-446e-44c8-af03-2ff89f03a4e3/messages
+POST {{host}}/v1/channels/467738a3-782d-4c43-90e0-9c30f7c74b48/messages
 Accept: application/json
 Content-Type: application/json
 Authorization: Pawel
 
 {
   "author": "Pawel",
-  "content": "Hello World!9"
+  "content": "Hello World!"
 }
 
 ### Download a file

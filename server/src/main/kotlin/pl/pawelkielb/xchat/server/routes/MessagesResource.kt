@@ -8,6 +8,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import pl.pawelkielb.xchat.data.Message
+import pl.pawelkielb.xchat.defaultPageSize
 import pl.pawelkielb.xchat.server.*
 import pl.pawelkielb.xchat.server.managers.MessageManager
 import javax.inject.Inject

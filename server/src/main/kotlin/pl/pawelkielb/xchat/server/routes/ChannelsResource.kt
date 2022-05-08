@@ -11,6 +11,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import pl.pawelkielb.xchat.data.CreateChannelRequest
 import pl.pawelkielb.xchat.data.Name
+import pl.pawelkielb.xchat.defaultPageSize
 import pl.pawelkielb.xchat.server.*
 import pl.pawelkielb.xchat.server.managers.ChannelManager
 import javax.inject.Inject

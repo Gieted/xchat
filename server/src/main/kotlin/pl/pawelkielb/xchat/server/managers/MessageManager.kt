@@ -5,9 +5,9 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.div
 import pl.pawelkielb.xchat.data.Message
+import pl.pawelkielb.xchat.defaultPageSize
 import pl.pawelkielb.xchat.server.MessageMongoEntry
 import pl.pawelkielb.xchat.server.create
-import pl.pawelkielb.xchat.server.defaultPageSize
 import pl.pawelkielb.xchat.server.list
 import java.time.Instant
 import java.util.*

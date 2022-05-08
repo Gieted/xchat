@@ -5,7 +5,11 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.Name
-import pl.pawelkielb.xchat.server.*
+import pl.pawelkielb.xchat.defaultPageSize
+import pl.pawelkielb.xchat.server.ChannelMongoEntry
+import pl.pawelkielb.xchat.server.create
+import pl.pawelkielb.xchat.server.list
+import pl.pawelkielb.xchat.server.toChannel
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -9,12 +9,15 @@ import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name
 import pl.pawelkielb.xchat.exceptions.DisconnectedException
 import pl.pawelkielb.xchat.exceptions.NetworkException
+import pl.pawelkielb.xchat.maxPageSize
 import java.io.IOException
 import java.net.ProtocolException
 import java.nio.file.NotDirectoryException
 import java.nio.file.Path
+import java.time.Instant
 import java.util.*
 import java.util.function.Consumer
+import kotlin.math.min
 
 
 /**
@@ -84,8 +87,51 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws ProtocolException     if the server does something unexpected
      * @throws DisconnectedException if the server disconnects
      */
-    fun readMessages(channel: UUID?, count: Int): Iterable<Message?>? {
-        TODO()
+    fun readMessages(channel: UUID, count: Int): Iterable<Message> = runBlocking {
+        val now = Instant.now()
+        var page = 0
+        var messagesLeft = count
+        val iterator = object : Iterator<Message> {
+            val messagesQueue: Queue<Message> = LinkedList()
+            var hasRemoteMessages = true
+
+            init {
+                fetchMoreMessages()
+            }
+
+            fun fetchMoreMessages() = runBlocking {
+                val messagesToFetch = min(messagesLeft, maxPageSize)
+                val newMessages = api.listMessages(channel, now, page++, messagesToFetch)
+                messagesLeft -= newMessages.size
+                if (newMessages.size != messagesToFetch || messagesLeft == 0) {
+                    hasRemoteMessages = false
+                }
+                messagesQueue.addAll(newMessages)
+            }
+
+            override fun hasNext(): Boolean {
+                if (messagesQueue.isEmpty() && hasRemoteMessages) {
+                    fetchMoreMessages()
+                }
+
+                return messagesQueue.isNotEmpty()
+            }
+
+            override fun next(): Message {
+                if (!hasNext()) {
+                    throw NoSuchElementException()
+                }
+                if (messagesQueue.isEmpty()) {
+                    fetchMoreMessages()
+                }
+
+                return messagesQueue.poll()
+            }
+        }
+
+        object : Iterable<Message> {
+            override fun iterator() = iterator
+        }
     }
 
     class NotFileException : RuntimeException()

@@ -6,8 +6,10 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import pl.pawelkielb.xchat.data.Channel
 import pl.pawelkielb.xchat.data.CreateChannelRequest
+import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name
 import java.time.Instant
+import java.util.*
 
 class XChatApi(private val httpClient: HttpClient, private val host: String, private val user: Name) {
     suspend fun listChannels(members: Set<Name>?, createdAfter: Instant?, page: Int, pageSize: Int): List<Channel> =
@@ -31,6 +33,18 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
             authorization(user.value())
             setBody(CreateChannelRequest(name, members))
         }.body()
+
+    suspend fun listMessages(channel: UUID, sentBefore: Instant?, page: Int, pageSize: Int): List<Message> {
+        return httpClient.get("$host/v1/channels/$channel/messages") {
+            accept(ContentType.Application.Json)
+            authorization(user.value())
+            if (sentBefore != null) {
+                parameter("sentBefore", sentBefore.toEpochMilli())
+            }
+            parameter("page", page)
+            parameter("pageSize", pageSize)
+        }.body()
+    }
 }
 
 private fun HttpRequestBuilder.authorization(value: String) {
