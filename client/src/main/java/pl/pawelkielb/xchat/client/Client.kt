@@ -32,10 +32,15 @@ class Client(private val database: Database, private val api: XChatApi, private 
     @Throws(ProtocolException::class)
     fun sync() = runBlocking {
         val lastSyncTimestamp = database.loadCache().lastSyncTimestamp
-        val channels = api.listChannels(setOf(clientConfig.username()), lastSyncTimestamp)
-        for (channel in channels) {
-            database.saveChannel(channel.name, ChannelConfig(channel.id))
-        }
+        fetchAll(
+            generate = { page, pageSize ->
+                api.listChannels(setOf(clientConfig.username()), lastSyncTimestamp, page, pageSize)
+            },
+            consume = { channels ->
+                for (channel in channels) {
+                    database.saveChannel(channel.name, ChannelConfig(channel.id))
+                }
+            })
         updateLastSyncTimestamp(database)
     }
 
@@ -57,8 +62,8 @@ class Client(private val database: Database, private val api: XChatApi, private 
      */
     @Throws(ProtocolException::class)
     fun createGroupChannel(name: Name?, members: Set<Name>) = runBlocking {
-        api.createChannel(name, members + clientConfig.username)
-        sync()
+        val createdChannel = api.createChannel(name, members + clientConfig.username)
+        database.saveChannel(createdChannel.name, ChannelConfig(createdChannel.id))
     }
 
     /**
