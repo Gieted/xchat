@@ -80,7 +80,7 @@ public class Main {
 
     private static ClientConfig getClientConfigCatching(Database database) {
         try {
-            return database.getClientConfig();
+            return database.loadClientConfig();
         } catch (Database.InvalidConfigException e) {
             ExceptionHandler.onInvalidClientConfig(e);
 

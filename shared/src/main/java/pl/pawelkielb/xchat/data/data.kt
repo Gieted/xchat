@@ -32,4 +32,4 @@ data class Channel(
 )
 
 @Serializable
-data class CreateChannelRequest(val name: Name, val members: Set<Name>)
+data class CreateChannelRequest(val name: Name?, val members: Set<Name>)

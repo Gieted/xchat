@@ -33,7 +33,7 @@ fun saveCache(file: File, cache: Cache) {
 }
 
 fun updateLastSyncTimestamp(database: Database) {
-    val cache = database.cache
+    val cache = database.loadCache()
     cache.lastSyncTimestamp = Instant.now()
     database.saveCache(cache)
 }

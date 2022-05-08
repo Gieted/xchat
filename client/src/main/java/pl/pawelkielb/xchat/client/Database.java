@@ -69,7 +69,7 @@ public class Database {
      * @throws InvalidConfigException if the config contains errors
      * @throws FileReadException      if there was an error while reading some file
      */
-    public ClientConfig getClientConfig() {
+    public ClientConfig loadClientConfig() {
         Path path = rootDirectory.resolve(clientConfigFileName);
         Properties properties;
         properties = readProperties(path);
@@ -157,7 +157,7 @@ public class Database {
         writeProperties(configPath, properties);
     }
 
-    public Cache getCache() {
+    public Cache loadCache() {
         var path = rootDirectory.resolve(cacheFileName);
         var cache = CacheKt.loadCache(path.toFile());
         if (cache == null) {

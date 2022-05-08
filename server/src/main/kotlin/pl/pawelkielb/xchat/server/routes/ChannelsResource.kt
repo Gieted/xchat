@@ -45,7 +45,8 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
             Json.decodeFromString<CreateChannelRequest>(createChannelRequestJson)
         }.getOrElse { throw badRequest(it.message) }
 
-        val createdChannel = channelManager.create(createChannelRequest.name, createChannelRequest.members)
+        val createdChannel =
+            channelManager.create(createChannelRequest.name ?: Name.of("null"), createChannelRequest.members)
         Json.encodeToString(createdChannel)
     }
 }

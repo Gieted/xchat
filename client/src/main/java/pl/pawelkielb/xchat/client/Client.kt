@@ -1,5 +1,6 @@
 package pl.pawelkielb.xchat.client
 
+import kotlinx.coroutines.runBlocking
 import pl.pawelkielb.xchat.client.config.ChannelConfig
 import pl.pawelkielb.xchat.client.config.ClientConfig
 import pl.pawelkielb.xchat.client.exceptions.FileReadException
@@ -29,8 +30,8 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws FileWriteException    if saving updates fails
      */
     @Throws(ProtocolException::class)
-    fun sync() {
-        val lastSyncTimestamp = database.cache.lastSyncTimestamp
+    fun sync() = runBlocking {
+        val lastSyncTimestamp = database.loadCache().lastSyncTimestamp
         val channels = api.listChannels(setOf(clientConfig.username()), lastSyncTimestamp)
         for (channel in channels) {
             database.saveChannel(channel.name, ChannelConfig(channel.id))
@@ -45,19 +46,18 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws DisconnectedException if the server disconnects
      */
     @Throws(ProtocolException::class)
-    fun createPrivateChannel(recipient: Name) {
-        createGroupChannel(null, java.util.List.of(recipient))
-    }
+    fun createPrivateChannel(recipient: Name) = createGroupChannel(null, setOf(recipient))
 
     /**
      * @param name    a name of the channel. If a null is provided the name will be decided by the server.
-     * @param members a list of usernames of users who should be participants of this channel
+     * @param members a set of usernames of users who should be participants of this channel
      * @throws NetworkException      if network fails
      * @throws ProtocolException     if the server does something unexpected
      * @throws DisconnectedException if the server disconnects
      */
     @Throws(ProtocolException::class)
-    fun createGroupChannel(name: Name?, members: List<Name>) {
+    fun createGroupChannel(name: Name?, members: Set<Name>) = runBlocking {
+        api.createChannel(name, members)
     }
 
     /**

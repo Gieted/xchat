@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static pl.pawelkielb.xchat.Exceptions.throwAsUnchecked;
 
@@ -90,7 +91,7 @@ public abstract class Commands {
                         .stream()
                         .filter(Name::isValid)
                         .map(Name::of)
-                        .toList();
+                        .collect(Collectors.toSet());
 
                 doNetwork(() -> client.createGroupChannel(channelName, members));
             }
