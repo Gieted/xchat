@@ -1,6 +1,8 @@
 package pl.pawelkielb.xchat.client
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import pl.pawelkielb.xchat.client.config.ChannelConfig
 import pl.pawelkielb.xchat.client.config.ClientConfig
 import pl.pawelkielb.xchat.client.exceptions.DisconnectedException
@@ -11,15 +13,17 @@ import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name
 import pl.pawelkielb.xchat.data.SendMessageRequest
 import pl.pawelkielb.xchat.maxPageSize
+import pl.pawelkielb.xchat.utils.StringUtils
 import java.io.IOException
+import java.io.OutputStream
 import java.net.ProtocolException
-import java.nio.file.NotDirectoryException
-import java.nio.file.Path
+import java.nio.file.*
 import java.time.Instant
 import java.util.*
 import java.util.function.Consumer
 import kotlin.io.path.exists
 import kotlin.io.path.fileSize
+import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
 import kotlin.math.min
 
@@ -163,7 +167,7 @@ class Client(private val database: Database, private val api: XChatApi, private 
         }
 
         val file = path.toFile().inputStream()
-        val name = path.fileName.toString()
+        val name = Name.of(path.fileName.toString())
         val size = path.fileSize()
 
         api.uploadFile(channel, file, name, size, progressConsumer)
@@ -183,13 +187,30 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws FileWriteException     if saving the file fails
      */
     @Throws(NotDirectoryException::class, ProtocolException::class)
-    fun downloadFile(channel: UUID, name: Name, destinationDirectory: Path, progressConsumer: Consumer<Double>) {
-        printNotImplementedMessage()
-    }
-}
+    fun downloadFile(channel: UUID, name: Name, destinationDirectory: Path, progressConsumer: Consumer<Double>) =
+        runBlocking {
+            if (!destinationDirectory.isDirectory()) {
+                throw NotDirectoryException(destinationDirectory.toString())
+            }
 
-private fun printNotImplementedMessage() {
-    println()
-    println("Sorry, but this feature is not yet implemented :)")
-    println()
+            var filename = name.toString()
+            var filePath: Path
+            var output: OutputStream? = null
+
+            // find unused file name
+            while (output == null) {
+                filePath = destinationDirectory.resolve(filename)
+                try {
+                    output = withContext(Dispatchers.IO) {
+                        Files.newOutputStream(filePath, StandardOpenOption.CREATE_NEW)
+                    }
+                } catch (e: FileAlreadyExistsException) {
+                    filename = StringUtils.incrementFileName(filename)
+                } catch (e: IOException) {
+                    throw FileWriteException(filePath, e)
+                }
+            }
+
+            api.downloadFile(channel, name, output, progressConsumer)
+        }
 }

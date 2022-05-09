@@ -6,9 +6,15 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 import io.ktor.utils.io.streams.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes
 import pl.pawelkielb.xchat.data.*
 import java.io.InputStream
+import java.io.OutputStream
 import java.time.Instant
 import java.util.*
 import java.util.function.Consumer
@@ -58,7 +64,7 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
     suspend fun uploadFile(
         channel: UUID,
         file: InputStream,
-        name: String,
+        name: Name,
         size: Long,
         progressConsumer: Consumer<Double>,
     ) = httpClient.post("$host/v1/channels/$channel/files") {
@@ -74,6 +80,40 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
         onUpload { bytesSentTotal, contentLength ->
             progressConsumer.accept(bytesSentTotal.toDouble() / contentLength)
         }
+    }.also { file.close() }
+
+    suspend fun downloadFile(
+        channel: UUID,
+        file: Name,
+        outputStream: OutputStream,
+        progressConsumer: Consumer<Double>
+    ) = try {
+        httpClient.prepareGet("$host/v1/channels/$channel/files/$file") {
+            accept(ContentType.Application.Any)
+            authorization(user.value())
+        }.execute { response ->
+            val body: ByteReadChannel = response.body()
+            val totalSize = response.contentLength() ?: 0
+            var readBytes = 0
+            while (!body.isClosedForRead) {
+                val packet = body.readRemaining(fileChunkSizeInBytes.toLong())
+                while (!packet.isEmpty) {
+                    val bytes = packet.readBytes()
+                    withContext(Dispatchers.IO) {
+                        outputStream.write(bytes)
+                    }
+                    readBytes += bytes.size
+                    progressConsumer.accept(readBytes.toDouble() / totalSize)
+                }
+            }
+            withContext(Dispatchers.IO) {
+                outputStream.close()
+            }
+        }
+    } catch (e: ClientRequestException) {
+        if (e.response.status == HttpStatusCode.NotFound) {
+            throw NoSuchElementException(file.value())
+        } else throw e
     }
 }
 

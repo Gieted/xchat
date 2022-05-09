@@ -1,9 +1,6 @@
 package pl.pawelkielb.xchat.server.routes
 
-import jakarta.ws.rs.GET
-import jakarta.ws.rs.Path
-import jakarta.ws.rs.PathParam
-import jakarta.ws.rs.Produces
+import jakarta.ws.rs.*
 import jakarta.ws.rs.core.HttpHeaders
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
@@ -14,6 +11,7 @@ import pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes
 import pl.pawelkielb.xchat.server.managers.FilesManager
 import pl.pawelkielb.xchat.server.parseChannel
 import pl.pawelkielb.xchat.server.parseName
+import java.nio.file.NoSuchFileException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,7 +30,11 @@ class FileResource @Inject constructor(private val filesManager: FilesManager) {
 
         val file = filesManager.readFile(channel, fileName)
 
-        val fileSize = filesManager.getFileSize(channel, fileName)
+        val fileSize = try {
+            filesManager.getFileSize(channel, fileName)
+        } catch (e: NoSuchFileException) {
+            throw NotFoundException("File $fileName does not exist")
+        }
 
         val streamingOutput = StreamingOutput { output ->
             file.subscribe(fileChunkSizeInBytes, { nextBytes ->

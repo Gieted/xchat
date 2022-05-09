@@ -24,6 +24,9 @@ public final class Name {
         if (name.length() > 50) {
             throw new IllegalArgumentException("Name cannot be longer than 50 characters");
         }
+        if (name.contains("..")) {
+            throw new IllegalArgumentException("Name cannot contain '..'");
+        }
 
         return new Name(name);
     }

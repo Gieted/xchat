@@ -7,6 +7,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 @Singleton
@@ -22,6 +23,9 @@ class FilesManager @Inject constructor(private val fileDatabase: FileDatabase) {
         suspendCoroutine { continuation ->
             fileDatabase.getFileSize(channel, name).thenAccept { size ->
                 continuation.resume(size)
+            }.exceptionally { e ->
+                continuation.resumeWithException(e.cause ?: e)
+                null
             }
         }
 }
