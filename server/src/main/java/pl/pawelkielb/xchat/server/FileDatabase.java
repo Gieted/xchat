@@ -20,7 +20,7 @@ import java.util.concurrent.Executor;
 
 import static pl.pawelkielb.xchat.Functions.c;
 import static pl.pawelkielb.xchat.Functions.r;
-import static pl.pawelkielb.xchat.server.TransferSettings.fileChunkSizeInBytes;
+import static pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes;
 
 
 /**

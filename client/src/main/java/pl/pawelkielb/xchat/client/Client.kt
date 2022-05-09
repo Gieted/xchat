@@ -18,6 +18,9 @@ import java.nio.file.Path
 import java.time.Instant
 import java.util.*
 import java.util.function.Consumer
+import kotlin.io.path.exists
+import kotlin.io.path.fileSize
+import kotlin.io.path.isRegularFile
 import kotlin.math.min
 
 
@@ -150,8 +153,20 @@ class Client(private val database: Database, private val api: XChatApi, private 
      * @throws FileReadException     if reading the file fails
      */
     @Throws(IOException::class)
-    fun sendFile(channel: UUID, path: Path, progressConsumer: Consumer<Double>) {
-        printNotImplementedMessage()
+    fun sendFile(channel: UUID, path: Path, progressConsumer: Consumer<Double>) = runBlocking {
+        if (!path.exists()) {
+            throw NoSuchFileException(path.toFile())
+        }
+
+        if (!path.isRegularFile()) {
+            throw NotFileException()
+        }
+
+        val file = path.toFile().inputStream()
+        val name = path.fileName.toString()
+        val size = path.fileSize()
+
+        api.uploadFile(channel, file, name, size, progressConsumer)
     }
 
     /**

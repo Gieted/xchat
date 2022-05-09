@@ -27,7 +27,7 @@ class FilesResource @Inject constructor(private val filesManager: FilesManager) 
         @PathParam("channel") channelString: String,
         @FormDataParam("file") inputStream: InputStream,
         @FormDataParam("file") fileDetail: FormDataContentDisposition
-    ) = runBlocking(Dispatchers.Default) {
+    ): Unit = runBlocking(Dispatchers.Default) {
         val channel = parseChannel(channelString)
         val filename = parseName(parameterName = "file name", fileDetail.fileName)
 

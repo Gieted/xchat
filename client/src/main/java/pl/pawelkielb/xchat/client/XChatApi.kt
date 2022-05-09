@@ -2,11 +2,16 @@ package pl.pawelkielb.xchat.client
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import io.ktor.utils.io.streams.*
 import pl.pawelkielb.xchat.data.*
+import java.io.InputStream
 import java.time.Instant
 import java.util.*
+import java.util.function.Consumer
 
 class XChatApi(private val httpClient: HttpClient, private val host: String, private val user: Name) {
     suspend fun listChannels(members: Set<Name>?, createdAfter: Instant?, page: Int, pageSize: Int): List<Channel> =
@@ -49,6 +54,27 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
             authorization(user.value())
             setBody(message)
         }.body()
+
+    suspend fun uploadFile(
+        channel: UUID,
+        file: InputStream,
+        name: String,
+        size: Long,
+        progressConsumer: Consumer<Double>,
+    ) = httpClient.post("$host/v1/channels/$channel/files") {
+        accept(ContentType.Application.Json)
+        authorization(user.value())
+        setBody(MultiPartFormDataContent(
+            formData {
+                appendInput(key = "file", block = { file.asInput() }, size = size, headers = Headers.build {
+                    append(HttpHeaders.ContentDisposition, "filename=$name")
+                })
+            }
+        ))
+        onUpload { bytesSentTotal, contentLength ->
+            progressConsumer.accept(bytesSentTotal.toDouble() / contentLength)
+        }
+    }
 }
 
 private fun HttpRequestBuilder.authorization(value: String) {

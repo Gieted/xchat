@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.Response
 import jakarta.ws.rs.core.StreamingOutput
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import pl.pawelkielb.xchat.server.TransferSettings.fileChunkSizeInBytes
+import pl.pawelkielb.xchat.TransferSettings.fileChunkSizeInBytes
 import pl.pawelkielb.xchat.server.managers.FilesManager
 import pl.pawelkielb.xchat.server.parseChannel
 import pl.pawelkielb.xchat.server.parseName
