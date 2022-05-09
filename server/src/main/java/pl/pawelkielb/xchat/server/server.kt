@@ -8,6 +8,7 @@ import org.glassfish.jersey.servlet.ServletContainer
 import pl.pawelkielb.xchat.server.dagger.AppComponent
 import pl.pawelkielb.xchat.server.dagger.DaggerAppComponent
 import pl.pawelkielb.xchat.server.routes.*
+import java.io.File
 import org.eclipse.jetty.server.Server as Jetty
 
 
@@ -54,10 +55,10 @@ class Server(
 }
 
 @JvmOverloads
-fun Server(port: Int = Server.defaultPort): Server {
-    val component: AppComponent = DaggerAppComponent.create()
-    val applicationScope = component.applicationScope()
-    with(applicationScope) {
+fun Server(port: Int = Server.defaultPort, databaseRoot: File): Server {
+    val component: AppComponent = DaggerAppComponent.factory().create(databaseRoot)
+    val applicationContext = component.applicationContext()
+    with(applicationContext) {
         return Server(port)
     }
 }

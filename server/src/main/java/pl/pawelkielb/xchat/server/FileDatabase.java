@@ -8,6 +8,7 @@ import pl.pawelkielb.xchat.utils.StringUtils;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -35,11 +36,11 @@ public class FileDatabase {
 
     @Inject
     public FileDatabase(@Named("io") Executor ioThreads,
-                        @Named("database") Path rootDirectory,
+                        @Named("databaseRoot") File rootDirectory,
                         Logger logger) {
 
         this.ioThreads = ioThreads;
-        this.messagesDirectory = rootDirectory.resolve("messages");
+        this.messagesDirectory = rootDirectory.toPath().resolve("messages");
         this.logger = logger;
     }
 

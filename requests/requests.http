@@ -1,5 +1,5 @@
 ### List new channels
-GET {{host}}/v1/channels?members=damian&createdAfter=1651867065155
+GET {{host}}/v1/channels?members=pawel&createdAfter=1651867065155
 Accept: application/json
 Authorization: Pawel
 
@@ -40,7 +40,7 @@ Accept: */*
 Authorization: Pawel
 
 ### Send a file
-POST {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files
+POST {{host}}/v1/channels/7a778132-a9c2-4ac4-a7da-488f5815191c/files
 Accept: application/json
 Content-Type: multipart/form-data; boundary=boundary
 Authorization: Pawel

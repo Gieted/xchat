@@ -11,8 +11,6 @@ import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import pl.pawelkielb.xchat.Logger
 import pl.pawelkielb.xchat.server.ConsoleLogger
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.concurrent.Executor
 import javax.inject.Named
 import javax.inject.Singleton
@@ -29,11 +27,6 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun coroutineScope() = CoroutineScope(Dispatchers.Default)
-
-        @Provides
-        @Singleton
-        @Named("database")
-        fun databaseRoot(): Path = Paths.get(".")
 
         @Provides
         @Named("io")

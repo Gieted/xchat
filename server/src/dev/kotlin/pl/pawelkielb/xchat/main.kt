@@ -35,9 +35,8 @@ suspend fun main(): Unit = coroutineScope {
             val serverKt = classLoader.loadClass("pl.pawelkielb.xchat.server.ServerKt")
 
             server = serverKt
-                .declaredMethods
-                .find { it.name == "Server" && it.parameterCount == 0 }!!
-                .invoke(null)
+                .getDeclaredMethod("Server", File::class.java)
+                .invoke(null, File("../test_server"))
 
             // server.start()
             serverClass!!.declaredMethods.find { it.name == "start" }!!.invoke(server)
