@@ -21,10 +21,7 @@ import java.nio.file.*
 import java.time.Instant
 import java.util.*
 import java.util.function.Consumer
-import kotlin.io.path.exists
-import kotlin.io.path.fileSize
-import kotlin.io.path.isDirectory
-import kotlin.io.path.isRegularFile
+import kotlin.io.path.*
 import kotlin.math.min
 
 
@@ -159,7 +156,7 @@ class Client(private val database: Database, private val api: XChatApi, private 
     @Throws(IOException::class)
     fun sendFile(channel: UUID, path: Path, progressConsumer: Consumer<Double>) = runBlocking {
         if (!path.exists()) {
-            throw NoSuchFileException(path.toFile())
+            throw NoSuchFileException(path.absolutePathString())
         }
 
         if (!path.isRegularFile()) {
