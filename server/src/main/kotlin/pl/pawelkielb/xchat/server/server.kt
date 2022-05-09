@@ -2,14 +2,12 @@ package pl.pawelkielb.xchat.server
 
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
+import org.glassfish.jersey.media.multipart.MultiPartFeature
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
 import pl.pawelkielb.xchat.server.dagger.AppComponent
 import pl.pawelkielb.xchat.server.dagger.DaggerAppComponent
-import pl.pawelkielb.xchat.server.routes.ChannelsResource
-import pl.pawelkielb.xchat.server.routes.MessagesResource
-import pl.pawelkielb.xchat.server.routes.RootServlet
-import pl.pawelkielb.xchat.server.routes.V1Resource
+import pl.pawelkielb.xchat.server.routes.*
 import org.eclipse.jetty.server.Server as Jetty
 
 
@@ -18,7 +16,8 @@ class Server(
     rootServlet: RootServlet,
     v1Resource: V1Resource,
     channelsResource: ChannelsResource,
-    messagesResource: MessagesResource
+    messagesResource: MessagesResource,
+    filesResource: FilesResource
 ) {
     companion object {
         const val defaultPort = 8080
@@ -36,6 +35,8 @@ class Server(
                     register(v1Resource)
                     register(channelsResource)
                     register(messagesResource)
+                    register(filesResource)
+                    register(MultiPartFeature::class.java)
                 }
                 addServlet(ServletHolder(ServletContainer(resourceConfig)), "/v1/*")
             }

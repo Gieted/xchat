@@ -32,6 +32,7 @@ dependencies {
 
     implementation("org.glassfish.jersey.containers:jersey-container-jetty-servlet:3.0.4")
     implementation("org.glassfish.jersey.inject:jersey-hk2:3.0.4")
+    implementation("org.glassfish.jersey.media:jersey-media-multipart:3.0.4")
 }
 
 tasks.test {

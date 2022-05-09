@@ -1,13 +1,14 @@
 package pl.pawelkielb.xchat.client;
 
+import pl.pawelkielb.xchat.Exceptions;
+import pl.pawelkielb.xchat.Logger;
+import pl.pawelkielb.xchat.Observable;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.DisconnectedException;
 import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException;
 import pl.pawelkielb.xchat.client.exceptions.NetworkException;
-import pl.pawelkielb.xchat.client.logger.FileLogger;
-import pl.pawelkielb.xchat.client.logger.Logger;
 import pl.pawelkielb.xchat.data.Message;
 import pl.pawelkielb.xchat.data.Name;
 
@@ -20,7 +21,7 @@ import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static pl.pawelkielb.xchat.client.Exceptions.throwAsUnchecked;
+import static pl.pawelkielb.xchat.Exceptions.throwAsUnchecked;
 
 
 public abstract class Commands {

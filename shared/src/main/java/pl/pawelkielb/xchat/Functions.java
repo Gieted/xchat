@@ -1,11 +1,11 @@
-package pl.pawelkielb.xchat.client;
+package pl.pawelkielb.xchat;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
-import static pl.pawelkielb.xchat.client.Exceptions.throwAsUnchecked;
+import static pl.pawelkielb.xchat.Exceptions.throwAsUnchecked;
 
 /**
  * This class contains helper functions that convert passed functions to a different functions.

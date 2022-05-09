@@ -4,8 +4,8 @@ import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.FileReadException;
 import pl.pawelkielb.xchat.client.exceptions.FileWriteException;
-import pl.pawelkielb.xchat.client.utils.StringUtils;
 import pl.pawelkielb.xchat.data.Name;
+import pl.pawelkielb.xchat.utils.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;

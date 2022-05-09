@@ -1,7 +1,7 @@
 package pl.pawelkielb.xchat.client.exceptions;
 
+import pl.pawelkielb.xchat.Exceptions;
 import pl.pawelkielb.xchat.client.Database;
-import pl.pawelkielb.xchat.client.Exceptions;
 import pl.pawelkielb.xchat.client.Main;
 
 import java.net.ProtocolException;

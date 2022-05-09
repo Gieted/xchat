@@ -2,10 +2,7 @@ package pl.pawelkielb.xchat.server.dagger
 
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import pl.pawelkielb.xchat.server.Server
-import pl.pawelkielb.xchat.server.routes.ChannelsResource
-import pl.pawelkielb.xchat.server.routes.MessagesResource
-import pl.pawelkielb.xchat.server.routes.RootServlet
-import pl.pawelkielb.xchat.server.routes.V1Resource
+import pl.pawelkielb.xchat.server.routes.*
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -16,7 +13,8 @@ data class ApplicationContext @Inject constructor(
     val db: Provider<CoroutineDatabase>,
     val v1Resource: Provider<V1Resource>,
     val channelsResource: Provider<ChannelsResource>,
-    val messagesResource: Provider<MessagesResource>
+    val messagesResource: Provider<MessagesResource>,
+    val filesResource: Provider<FilesResource>
 ) {
     fun Server(port: Int = Server.defaultPort) =
         Server(
@@ -24,6 +22,7 @@ data class ApplicationContext @Inject constructor(
             rootServlet.get(),
             v1Resource.get(),
             channelsResource.get(),
-            messagesResource.get()
+            messagesResource.get(),
+            filesResource.get()
         )
 }

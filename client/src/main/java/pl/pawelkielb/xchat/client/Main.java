@@ -1,5 +1,6 @@
 package pl.pawelkielb.xchat.client;
 
+import pl.pawelkielb.xchat.Observable;
 import pl.pawelkielb.xchat.client.config.ChannelConfig;
 import pl.pawelkielb.xchat.client.config.ClientConfig;
 import pl.pawelkielb.xchat.client.exceptions.ExceptionHandler;
