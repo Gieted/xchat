@@ -5,9 +5,10 @@ import pl.pawelkielb.xchat.Observable;
 import pl.pawelkielb.xchat.data.Name;
 import pl.pawelkielb.xchat.utils.StringUtils;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +24,7 @@ import static pl.pawelkielb.xchat.Functions.r;
 /**
  * Allows saving and loading the server's data. It's thread-safe.
  */
+@Singleton
 public class FileDatabase {
     private final Executor ioThreads;
     private final Path messagesDirectory;
@@ -31,8 +33,9 @@ public class FileDatabase {
     private final FileTaskQueue<UUID> fileCreationTaskQueue = new FileTaskQueue<>();
     private final FileTaskQueue<Path> fileTaskQueue = new FileTaskQueue<>();
 
-    public FileDatabase(Executor ioThreads,
-                        Path rootDirectory,
+    @Inject
+    public FileDatabase(@Named("io") Executor ioThreads,
+                        @Named("database") Path rootDirectory,
                         Logger logger) {
 
         this.ioThreads = ioThreads;
@@ -164,19 +167,5 @@ public class FileDatabase {
                 })));
 
         return result;
-    }
-
-    private static void newLine(RandomAccessFile raf) throws IOException {
-        raf.write("\n".getBytes());
-    }
-
-    private static long bytesToLong(byte[] bytes) {
-        ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
-        buffer.put(bytes);
-        return buffer.getLong(0);
-    }
-
-    private static String nameToFilename(Name name) {
-        return String.valueOf(name.value().toLowerCase().hashCode());
     }
 }

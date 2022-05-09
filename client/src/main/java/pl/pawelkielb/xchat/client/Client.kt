@@ -132,9 +132,7 @@ class Client(private val database: Database, private val api: XChatApi, private 
             }
         }
 
-        object : Iterable<Message> {
-            override fun iterator() = iterator
-        }
+        Iterable { iterator }
     }
 
     class NotFileException : RuntimeException()
