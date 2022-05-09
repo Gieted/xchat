@@ -31,10 +31,10 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
         @QueryParam("page") pageString: String?,
         @QueryParam("pageSize") pageSizeString: String?
     ): String = runBlocking(Dispatchers.Default) {
-        val user = parseUser(headers)
+        val user = getUserFromAuthorizationHeader(headers)
 
         val members = membersString?.split(",")?.map { Name.of(it) }?.toSet() ?: emptySet()
-        val createdAfter = parseInstant(createdAfterString, createdAfter)
+        val createdAfter = parseInstant(string = createdAfterString, parameterName = createdAfter)
 
         val page = parsePage(pageString) ?: 0
         val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
@@ -47,7 +47,7 @@ class ChannelsResource @Inject constructor(private val channelManager: ChannelMa
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun create(@Context headers: HttpHeaders, createChannelRequestJson: String) = runBlocking(Dispatchers.Default) {
-        val user = parseUser(headers)
+        val user = getUserFromAuthorizationHeader(headers)
 
         val createChannelRequest = runCatching {
             Json.decodeFromString<CreateChannelRequest>(createChannelRequestJson)

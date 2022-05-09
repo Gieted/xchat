@@ -33,7 +33,7 @@ class MessagesResource @Inject constructor(private val messageManager: MessageMa
     ): String = runBlocking(Dispatchers.Default) {
         val channel = parseChannel(channelString)
 
-        val sentBefore = parseInstant(sentBeforeString, sentBefore)
+        val sentBefore = parseInstant(string = sentBeforeString, parameterName = sentBefore)
         val page = parsePage(pageString) ?: 0
         val pageSize = parsePageSize(pageSizeString) ?: defaultPageSize
 
@@ -50,7 +50,7 @@ class MessagesResource @Inject constructor(private val messageManager: MessageMa
         @PathParam("channel") channelString: String,
         sendMessageRequestJson: String
     ) = runBlocking(Dispatchers.Default) {
-        val user = parseUser(headers)
+        val user = getUserFromAuthorizationHeader(headers)
         val channel = parseChannel(channelString)
 
         val sendMessageRequest =

@@ -37,6 +37,7 @@ class Server(
                     register(messagesResource)
                     register(filesResource)
                     register(MultiPartFeature::class.java)
+                    register(IllegalArgumentExceptionMapper::class.java)
                 }
                 addServlet(ServletHolder(ServletContainer(resourceConfig)), "/v1/*")
             }

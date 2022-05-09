@@ -11,6 +11,10 @@ application {
     mainClass.set("pl.pawelkielb.xchat.server.MainKt")
 }
 
+kapt {
+    useBuildCache = false
+}
+
 dependencies {
     implementation(project(":shared"))
 
