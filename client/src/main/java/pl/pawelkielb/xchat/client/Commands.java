@@ -122,7 +122,7 @@ public abstract class Commands {
                 }
 
                 String message = String.join(" ", args);
-                doNetwork(() -> client.sendMessage(channelConfig.id(), new Message(clientConfig.username(), message)));
+                doNetwork(() -> client.sendMessage(channelConfig.id(), message));
             }
 
             case "read" -> {

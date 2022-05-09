@@ -9,6 +9,7 @@ import pl.pawelkielb.xchat.client.exceptions.FileWriteException
 import pl.pawelkielb.xchat.client.exceptions.NetworkException
 import pl.pawelkielb.xchat.data.Message
 import pl.pawelkielb.xchat.data.Name
+import pl.pawelkielb.xchat.data.SendMessageRequest
 import pl.pawelkielb.xchat.maxPageSize
 import java.io.IOException
 import java.net.ProtocolException
@@ -71,13 +72,13 @@ class Client(private val database: Database, private val api: XChatApi, private 
 
     /**
      * @param channel an uuid of a channel you want to send the message to
-     * @param message a message to send
+     * @param content a content of a message to send
      * @throws NetworkException      if network fails
      * @throws ProtocolException     if the server does something unexpected
      * @throws DisconnectedException if the server disconnects
      */
-    fun sendMessage(channel: UUID, message: Message) = runBlocking {
-        api.sendMessage(channel, message)
+    fun sendMessage(channel: UUID, content: String) = runBlocking {
+        api.sendMessage(channel, SendMessageRequest(content))
     }
 
     /**

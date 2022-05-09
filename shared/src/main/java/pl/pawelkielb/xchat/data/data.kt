@@ -33,3 +33,6 @@ data class Channel(
 
 @Serializable
 data class CreateChannelRequest(val name: Name?, val members: Set<Name>)
+
+@Serializable
+data class SendMessageRequest(val content: String)

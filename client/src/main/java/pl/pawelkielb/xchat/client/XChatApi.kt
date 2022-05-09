@@ -4,10 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import pl.pawelkielb.xchat.data.Channel
-import pl.pawelkielb.xchat.data.CreateChannelRequest
-import pl.pawelkielb.xchat.data.Message
-import pl.pawelkielb.xchat.data.Name
+import pl.pawelkielb.xchat.data.*
 import java.time.Instant
 import java.util.*
 
@@ -45,7 +42,7 @@ class XChatApi(private val httpClient: HttpClient, private val host: String, pri
             parameter("pageSize", pageSize)
         }.body()
 
-    suspend fun sendMessage(channel: UUID, message: Message): Message =
+    suspend fun sendMessage(channel: UUID, message: SendMessageRequest): Message =
         httpClient.post("$host/v1/channels/$channel/messages") {
             accept(ContentType.Application.Json)
             contentType(ContentType.Application.Json)
