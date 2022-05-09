@@ -18,7 +18,8 @@ class Server(
     v1Resource: V1Resource,
     channelsResource: ChannelsResource,
     messagesResource: MessagesResource,
-    filesResource: FilesResource
+    filesResource: FilesResource,
+    fileResource: FileResource
 ) {
     companion object {
         const val defaultPort = 8080
@@ -37,6 +38,7 @@ class Server(
                     register(channelsResource)
                     register(messagesResource)
                     register(filesResource)
+                    register(fileResource)
                     register(MultiPartFeature::class.java)
                     register(IllegalArgumentExceptionMapper::class.java)
                 }

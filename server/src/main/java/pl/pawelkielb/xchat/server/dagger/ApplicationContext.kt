@@ -14,7 +14,8 @@ data class ApplicationContext @Inject constructor(
     val v1Resource: Provider<V1Resource>,
     val channelsResource: Provider<ChannelsResource>,
     val messagesResource: Provider<MessagesResource>,
-    val filesResource: Provider<FilesResource>
+    val filesResource: Provider<FilesResource>,
+    val fileResource: Provider<FileResource>
 ) {
     fun Server(port: Int = Server.defaultPort) =
         Server(
@@ -23,6 +24,7 @@ data class ApplicationContext @Inject constructor(
             v1Resource.get(),
             channelsResource.get(),
             messagesResource.get(),
-            filesResource.get()
+            filesResource.get(),
+            fileResource.get()
         )
 }

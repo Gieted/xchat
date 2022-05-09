@@ -20,6 +20,7 @@ import java.util.concurrent.Executor;
 
 import static pl.pawelkielb.xchat.Functions.c;
 import static pl.pawelkielb.xchat.Functions.r;
+import static pl.pawelkielb.xchat.server.TransferSettings.fileChunkSizeInBytes;
 
 
 /**
@@ -71,10 +72,10 @@ public class FileDatabase {
 
                         final String fileNameFinal = fileName;
 
-                        fileTaskQueue.runSuspendWriting(filePath, task -> file.subscribe(1000, c(nextBytes -> {
+                        fileTaskQueue.runSuspendWriting(filePath, task -> file.subscribe(fileChunkSizeInBytes, c(nextBytes -> {
                             try {
                                 output.write(nextBytes);
-                                file.requestNext(1000);
+                                file.requestNext(fileChunkSizeInBytes);
                             } catch (Exception e) {
                                 task.completeExceptionally(e);
                                 future.completeExceptionally(e);

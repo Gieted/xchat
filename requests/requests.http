@@ -35,7 +35,7 @@ Authorization: Pawel
 }
 
 ### Download a file
-GET {{host}}/v1/channels/6aafbddf-187f-453e-b922-45833262e430/files/images.zip
+GET {{host}}/v1/channels/7a778132-a9c2-4ac4-a7da-488f5815191c/files/hello_world.txt
 Accept: */*
 Authorization: Pawel
 
