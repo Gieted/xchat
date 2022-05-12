@@ -14,7 +14,7 @@ Pre-requirements:
 
 The installation procedure:
 
-1. Download the latest release from [here](https://github.com/pawelkielb/xchat/releases/download/1.0/client.zip).
+1. Download the latest release from [here](https://github.com/pawelkielb/xchat/releases/download/1.1/xchat-1.1.zip).
 2. Unpack it to any folder you wish.
 3. Add `bin/` folder to your `PATH`.
 4. Restart the computer or restart explorer in the task manager.
